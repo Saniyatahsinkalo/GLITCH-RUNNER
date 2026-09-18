@@ -1446,3 +1446,119 @@ body.has-touch .touch-controls-container,
     }
   }
 }
+
+/* MOBILE v1.3 — comfortable, centered game controls */
+@media (max-width: 520px) and (pointer: coarse) {
+  body.mobile-play-active .mobile-game-dpad {
+    left: 50% !important;
+    bottom: max(18px, env(safe-area-inset-bottom)) !important;
+    transform: translateX(-50%) !important;
+    width: 210px !important;
+    height: 148px !important;
+    margin: 0 !important;
+    gap: 8px !important;
+    z-index: 150 !important;
+  }
+
+  body.mobile-play-active .mobile-game-dpad > button,
+  body.mobile-play-active .mobile-game-dpad > div button {
+    width: 64px !important;
+    height: 64px !important;
+    min-width: 64px !important;
+    min-height: 64px !important;
+    max-width: 64px !important;
+    max-height: 64px !important;
+    border-radius: 12px !important;
+    font-size: 1.25rem !important;
+    border-width: 2px !important;
+    background: rgba(8,12,24,.82) !important;
+    box-shadow: 0 5px 18px rgba(0,0,0,.55), inset 0 0 14px rgba(0,240,255,.10) !important;
+  }
+
+  body.mobile-play-active .mobile-game-dpad > div {
+    display: flex !important;
+    gap: 8px !important;
+  }
+
+  body.mobile-play-active .mobile-game-dpad button.pressed {
+    background: var(--neon-cyan) !important;
+    color: #000 !important;
+    box-shadow: 0 0 24px rgba(0,240,255,.85) !important;
+  }
+
+  /* Give the arena much more vertical presence on portrait phones. */
+  body.mobile-play-active .canvas-viewport {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+  }
+
+  body.mobile-play-active #gameCanvas {
+    width: 100vw !important;
+    height: 66dvh !important;
+    max-width: none !important;
+    max-height: none !important;
+    aspect-ratio: auto !important;
+    object-fit: fill !important;
+  }
+
+  /* Keep HUD compact but readable. */
+  body.mobile-play-active .hud-panel {
+    top: max(8px, env(safe-area-inset-top)) !important;
+    left: 8px !important;
+    right: 106px !important;
+    gap: 5px !important;
+  }
+
+  body.mobile-play-active .hud-card {
+    min-height: 38px !important;
+    padding: 5px 6px !important;
+  }
+
+  body.mobile-play-active .hud-label {
+    font-size: .52rem !important;
+  }
+
+  body.mobile-play-active .hud-val {
+    font-size: .78rem !important;
+  }
+
+  body.mobile-play-active .mobile-fab {
+    width: 50px !important;
+    height: 50px !important;
+    min-width: 50px !important;
+    top: max(8px, env(safe-area-inset-top)) !important;
+  }
+
+  body.mobile-play-active .pause-fab { right: 62px !important; }
+  body.mobile-play-active .audio-fab { right: 8px !important; }
+
+  /* Do not let the D-pad cover the ship's main play area. */
+  body.mobile-play-active .mobile-game-dpad {
+    pointer-events: auto !important;
+  }
+
+  body.mobile-play-active .mobile-drag-message {
+    bottom: max(24px, env(safe-area-inset-bottom)) !important;
+  }
+}
+
+@media (max-width: 360px) and (pointer: coarse) {
+  body.mobile-play-active .mobile-game-dpad {
+    width: 184px !important;
+    height: 132px !important;
+  }
+  body.mobile-play-active .mobile-game-dpad > button,
+  body.mobile-play-active .mobile-game-dpad > div button {
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 56px !important;
+    min-height: 56px !important;
+    max-width: 56px !important;
+    max-height: 56px !important;
+  }
+  body.mobile-play-active .mobile-game-dpad > div {
+    gap: 6px !important;
+  }
+}
