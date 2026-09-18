@@ -135,6 +135,59 @@
     </section>
 
     <!-- ====================================================================
+         MOBILE-ONLY INTERFACE
+         Phone gets a dedicated menu / play / pause / game-over experience.
+         Desktop keeps the original control layout.
+         ==================================================================== -->
+    <section class="mobile-interface" id="mobileInterface" aria-label="Mobile game interface">
+      <div class="mobile-screen mobile-home-screen" id="mobileHomeScreen">
+        <div class="mobile-brand">GLITCH RUNNER</div>
+        <div class="mobile-tagline">THE WORLD IS BREAKING. KEEP MOVING.</div>
+        <div class="mobile-best-card">
+          <span>BEST SCORE</span>
+          <strong id="mobileBestScore">00000</strong>
+        </div>
+        <button id="mobilePlayBtn" class="mobile-main-btn" type="button">▶ PLAY</button>
+        <div class="mobile-home-actions">
+          <button id="mobileAudioBtn" class="mobile-small-btn" type="button">
+            <span id="mobileAudioGlyph">🔊</span> <span id="mobileAudioText">AUDIO ON</span>
+          </button>
+        </div>
+        <div class="mobile-help">COLLECT SHARDS • EVADE GLITCHES • SURVIVE</div>
+      </div>
+
+      <div class="mobile-play-actions" id="mobilePlayActions">
+        <button id="mobilePauseBtn" class="mobile-fab pause-fab" type="button" aria-label="Pause game">Ⅱ</button>
+        <button id="mobilePlayAudioBtn" class="mobile-fab audio-fab" type="button" aria-label="Toggle audio">
+          <span id="mobilePlayAudioGlyph">🔊</span>
+        </button>
+      </div>
+
+      <div class="mobile-screen mobile-pause-screen" id="mobilePauseScreen">
+        <div class="mobile-panel-title">SIMULATION PAUSED</div>
+        <div class="mobile-panel-subtitle">ALL THREATS & TIMERS FROZEN</div>
+        <button id="mobileResumeBtn" class="mobile-main-btn" type="button">▶ RESUME</button>
+        <div class="mobile-menu-row">
+          <button id="mobilePauseRestartBtn" class="mobile-small-btn danger" type="button">↻ RESTART</button>
+          <button id="mobilePauseHomeBtn" class="mobile-small-btn" type="button">⌂ MENU</button>
+        </div>
+      </div>
+
+      <div class="mobile-screen mobile-gameover-screen" id="mobileGameOverScreen">
+        <div class="mobile-panel-title danger-title">SYSTEM OFFLINE</div>
+        <div class="mobile-panel-subtitle">RUN COMPLETE</div>
+        <div class="mobile-results">
+          <div><span>SCORE</span><strong id="mobileFinalScore">00000</strong></div>
+          <div><span>BEST</span><strong id="mobileFinalBest">00000</strong></div>
+          <div><span>COMBO</span><strong id="mobileFinalCombo">0x</strong></div>
+          <div><span>LEVEL</span><strong id="mobileFinalLevel">01</strong></div>
+        </div>
+        <button id="mobilePlayAgainBtn" class="mobile-main-btn" type="button">↻ PLAY AGAIN</button>
+        <button id="mobileGameOverHomeBtn" class="mobile-small-btn" type="button">⌂ MAIN MENU</button>
+      </div>
+    </section>
+
+    <!-- ====================================================================
          SECTION 3.5: MULTI-DEVICE TOUCH CONTROLS
          Virtual D-pad and Touch/Drag controls for touchscreen devices
          ==================================================================== -->
