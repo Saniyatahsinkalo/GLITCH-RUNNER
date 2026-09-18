@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>GLITCH RUNNER // Cyberpunk Arcade Runner</title>
+  <meta name="description" content="GLITCH RUNNER - An intense, responsive cyberpunk arcade runner game with Reality Shifts, power-up shards, and synthwave visuals.">
+  <meta name="keywords" content="glitch runner, cyberpunk game, arcade, browser game, html5 canvas, retro runner">
+  <meta name="author" content="GLITCH RUNNER Team">
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="GLITCH RUNNER // Cyberpunk Arcade Runner">
+  <meta property="og:description" content="The world is breaking. Keep moving. An intense browser runner game with Reality Shifts, power-ups, and synthesized audio.">
+  <meta property="og:image" content="assets/preview.png">
+
+  <!-- Inline Cyberpunk Ship SVG Favicon (No external asset needed) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23060810'/><polygon points='50,15 85,82 50,66 15,82' fill='%2300f0ff' stroke='%23ff0055' stroke-width='4'/><circle cx='50' cy='52' r='8' fill='%23ff0055'/></svg>">
+
+  <!-- Visual Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Background grid & scanline effect layer -->
+  <div class="cyber-grid-bg"></div>
+
+  <!-- Main Game Shell Container -->
+  <main id="game-app">
+    
+    <!-- ====================================================================
+         SECTION 1: GAME HEADER
+         Contains the title with glitch effect data and the lore subtitle
+         ==================================================================== -->
+    <header class="game-header">
+      <div class="glitch-wrapper">
+        <h1 class="game-title" data-text="GLITCH RUNNER">GLITCH RUNNER</h1>
+      </div>
+      <p class="game-subtitle">The world is breaking. Keep moving.</p>
+    </header>
+
+    <!-- ====================================================================
+         SECTION 2: HEADS-UP DISPLAY (HUD)
+         Displays player status: Score, Best Score, Combo, Health, and Level
+         ==================================================================== -->
+    <section class="hud-panel" aria-label="Game Heads Up Display">
+      <!-- Score Metric -->
+      <div class="hud-card">
+        <span class="hud-label">SCORE</span>
+        <span id="scoreDisplay" class="hud-val">00000</span>
+      </div>
+
+      <!-- Best Score Metric -->
+      <div class="hud-card">
+        <span class="hud-label">BEST</span>
+        <span id="bestScoreDisplay" class="hud-val">00000</span>
+      </div>
+
+      <!-- Combo Metric -->
+      <div class="hud-card">
+        <span class="hud-label">COMBO</span>
+        <span id="comboDisplay" class="hud-val">0x</span>
+      </div>
+
+      <!-- Health Bar Metric -->
+      <div class="hud-card health-card">
+        <div class="health-meta">
+          <span class="hud-label">HEALTH</span>
+          <span id="healthDisplay" class="hud-val">100%</span>
+        </div>
+        <div class="health-track" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+          <div id="healthFill" class="health-fill"></div>
+        </div>
+      </div>
+
+      <!-- Level Metric -->
+      <div class="hud-card">
+        <span class="hud-label">LEVEL</span>
+        <span id="levelDisplay" class="hud-val">01</span>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 2.5: STATUS STRIP (REALITY SHIFT & POWER STATUS)
+         Displays real-time stability and active shard power-ups
+         ==================================================================== -->
+    <div class="status-strip" id="statusStrip">
+      <!-- Reality Shift Indicator -->
+      <div class="reality-indicator-panel" id="realityPanel" aria-live="polite">
+        <div class="reality-badge-box">
+          <span class="reality-dot" id="realityDot"></span>
+          <span class="reality-status-text" id="realityStatusText">REALITY: STABLE</span>
+        </div>
+        <div class="reality-event-box" id="realityEventBox" style="display: none;">
+          <span class="reality-event-name" id="realityEventName">EVENT: ---</span>
+          <span class="reality-event-time" id="realityEventTime">TIME: 0.0s</span>
+        </div>
+      </div>
+
+      <!-- Power-Up Status Indicator -->
+      <div class="power-indicator-panel" id="powerPanel" aria-live="polite">
+        <div class="power-badge-box">
+          <span class="power-dot" id="powerDot"></span>
+          <span class="power-status-text" id="powerStatusText">POWER: NONE</span>
+        </div>
+        <div class="power-detail-box" id="powerDetailBox" style="display: none;">
+          <span class="power-detail-text" id="powerDetailText">---</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         SECTION 2.8: ACTIVE MISSION / MINI CHALLENGE STRIP
+         Displays current run-based objective with score bounty
+         ==================================================================== -->
+    <div class="mission-strip" id="missionStrip" aria-live="polite">
+      <span class="mission-badge">OBJECTIVE</span>
+      <span class="mission-text" id="missionText">COLLECT 10 MEMORY SHARDS</span>
+      <span class="mission-progress" id="missionProgress">(0/10)</span>
+      <span class="mission-bounty" id="missionBounty">+100 PTS</span>
+    </div>
+
+    <!-- ====================================================================
+         SECTION 3: GAME CANVAS AREA
+         The HTML5 Canvas with HiDPI support and screen shake container
+         ==================================================================== -->
+    <section class="canvas-viewport" id="canvasViewport" aria-label="Game Screen">
+      <!-- Visual cyber corner markers -->
+      <div class="corner-marker top-left"></div>
+      <div class="corner-marker top-right"></div>
+      <div class="corner-marker bottom-left"></div>
+      <div class="corner-marker bottom-right"></div>
+
+      <!-- Internal resolution 800x450 (16:9 ratio) -->
+      <canvas id="gameCanvas" width="800" height="450"></canvas>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 3.5: MULTI-DEVICE TOUCH CONTROLS
+         Virtual D-pad and Touch/Drag controls for touchscreen devices
+         ==================================================================== -->
+    <div class="touch-controls-container" id="touchControlsContainer">
+      <div class="touch-mode-bar">
+        <span class="touch-mode-title">TOUCH MODE:</span>
+        <div class="touch-mode-toggle">
+          <button type="button" class="touch-toggle-btn active" id="btnModeButtons" data-mode="buttons">BUTTONS</button>
+          <button type="button" class="touch-toggle-btn" id="btnModeDrag" data-mode="drag">TOUCH / DRAG</button>
+        </div>
+      </div>
+
+      <!-- Virtual D-Pad (Up, Down, Left, Right) -->
+      <div class="virtual-dpad" id="virtualDpad">
+        <div class="dpad-row dpad-top">
+          <button type="button" class="dpad-btn" id="dpadUp" aria-label="Move Up">▲</button>
+        </div>
+        <div class="dpad-row dpad-mid">
+          <button type="button" class="dpad-btn" id="dpadLeft" aria-label="Move Left">◀</button>
+          <button type="button" class="dpad-btn" id="dpadDown" aria-label="Move Down">▼</button>
+          <button type="button" class="dpad-btn" id="dpadRight" aria-label="Move Right">▶</button>
+        </div>
+      </div>
+
+      <!-- Drag Mode Tip -->
+      <div class="touch-drag-hint" id="touchDragHint" style="display: none;">
+        <span>✦ DRAG ANYWHERE ON GAME ARENA TO STEER SHIP ✦</span>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         SECTION 4: CONTROL BAR
+         Action buttons to Start, Pause, Restart, and Toggle Audio
+         ==================================================================== -->
+    <nav class="controls-panel" aria-label="Game Controls">
+      <button id="btnStart" class="btn btn-primary" type="button">
+        <span class="btn-glyph">▶</span>
+        <span class="btn-text">START GAME</span>
+      </button>
+
+      <button id="btnPause" class="btn btn-secondary" type="button">
+        <span class="btn-glyph">⏸</span>
+        <span class="btn-text">PAUSE</span>
+      </button>
+
+      <button id="btnRestart" class="btn btn-danger" type="button">
+        <span class="btn-glyph">⟳</span>
+        <span class="btn-text">RESTART</span>
+      </button>
+
+      <button id="btnAudio" class="btn btn-audio" type="button" aria-label="Toggle Audio">
+        <span class="btn-glyph" id="audioGlyph">🔊</span>
+        <span class="btn-text" id="audioText">AUDIO ON</span>
+      </button>
+    </nav>
+
+    <!-- ====================================================================
+         SECTION 5: SYSTEM STATUS BAR
+         Gives feedback on current game state
+         ==================================================================== -->
+    <footer class="system-status">
+      <span class="status-pulse" id="statusDot"></span>
+      <span class="status-label">STATUS:</span>
+      <span id="statusMessage" class="status-text">SYSTEM STANDBY — AWAITING INITIALIZATION</span>
+    </footer>
+
+  </main>
+
+  <!-- Link to game script -->
+  <script src="game.js"></script>
+</body>
+</html>
