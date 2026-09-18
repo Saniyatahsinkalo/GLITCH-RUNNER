@@ -1684,3 +1684,81 @@ body.has-touch .touch-controls-container,
     -webkit-tap-highlight-color:transparent;
   }
 }
+
+
+/* MOBILE v2.1 — clean layers + arcade game feel */
+@media (max-width: 520px) and (pointer: coarse) {
+  /* The new mobile HUD replaces the cramped desktop HUD during play. */
+  body.mobile-play-active .hud-panel { display:none !important; }
+  body.mobile-play-active .status-strip,
+  body.mobile-play-active .mission-strip,
+  body.mobile-play-active .game-header,
+  body.mobile-play-active .controls-panel,
+  body.mobile-play-active .system-status { display:none !important; }
+
+  body.mobile-play-active .mobile-interface { z-index:200 !important; pointer-events:none; }
+  body.mobile-play-active .mobile-play-actions { z-index:230 !important; }
+  body.mobile-play-active .mobile-arcade-hud { z-index:220 !important; }
+
+  body.mobile-play-active .mobile-vfx {
+    position:fixed; inset:0; z-index:210; pointer-events:none; overflow:hidden;
+  }
+  .mobile-vfx { display:none; }
+  .mobile-scanlines {
+    position:absolute; inset:0;
+    background:repeating-linear-gradient(to bottom,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 1px,transparent 5px);
+    opacity:.22;
+  }
+  .mobile-vignette {
+    position:absolute; inset:0;
+    background:radial-gradient(circle at 50% 48%,transparent 48%,rgba(0,0,0,.38) 100%);
+  }
+  .mobile-speed-lines {
+    position:absolute; inset:0; opacity:.16;
+    background:repeating-linear-gradient(100deg,transparent 0 22px,rgba(0,240,255,.13) 23px,transparent 25px 70px);
+    mask-image:linear-gradient(to bottom,transparent 20%,#000 60%,transparent 100%);
+  }
+  .mobile-crosshair {
+    position:absolute; left:50%; top:52%; width:28px; height:28px; transform:translate(-50%,-50%);
+    border:1px solid rgba(0,240,255,.14); border-radius:50%;
+  }
+  .mobile-crosshair::before,.mobile-crosshair::after {
+    content:""; position:absolute; background:rgba(0,240,255,.18);
+  }
+  .mobile-crosshair::before { width:44px;height:1px;left:-9px;top:13px; }
+  .mobile-crosshair::after { height:44px;width:1px;left:13px;top:-9px; }
+
+  .mobile-combo-banner,.mobile-alert-banner {
+    position:absolute; left:50%; top:31%; transform:translate(-50%,-50%) scale(.8);
+    opacity:0; font:900 13px var(--font-mono); letter-spacing:2px; text-align:center;
+    text-shadow:0 0 12px currentColor; transition:opacity .16s, transform .16s;
+    white-space:nowrap;
+  }
+  .mobile-combo-banner.show,.mobile-alert-banner.show { opacity:1; transform:translate(-50%,-50%) scale(1); }
+  .mobile-combo-banner { color:#ffb703; }
+  .mobile-alert-banner { top:38%; color:#ff0055; }
+
+  body.mobile-play-active .mobile-game-dpad {
+    bottom:max(12px,env(safe-area-inset-bottom));
+    margin-bottom:0;
+  }
+  body.mobile-play-active .mobile-fab {
+    top:max(12px,env(safe-area-inset-top));
+  }
+  
+  /* Pause/game-over screens always sit above every gameplay layer. */
+  body:not(.mobile-play-active) .mobile-vfx { display:none !important; }
+  .mobile-pause-screen, .mobile-gameover-screen { z-index:300 !important; }
+  .mobile-pause-screen.visible, .mobile-gameover-screen.visible { pointer-events:auto; }
+
+  /* Comfortable portrait spacing. */
+  .mobile-pause-screen { padding-top:max(80px,env(safe-area-inset-top) + 60px); padding-bottom:max(40px,env(safe-area-inset-bottom) + 30px); }
+  .mobile-gameover-screen { padding-top:max(55px,env(safe-area-inset-top) + 30px); padding-bottom:max(35px,env(safe-area-inset-bottom) + 25px); }
+  .mobile-pause-screen .mobile-main-btn,
+  .mobile-gameover-screen .mobile-main-btn { width:min(84vw,320px); }
+
+  /* Keep the D-pad comfortably above Android's navigation area. */
+  body.mobile-play-active .mobile-game-dpad {
+    transform:translateY(-4px);
+  }
+}
