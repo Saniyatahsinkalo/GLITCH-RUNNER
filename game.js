@@ -109,6 +109,18 @@ const mobileGameDpad = document.getElementById("mobileGameDpad");
 const mobileDragMessage = document.getElementById("mobileDragMessage");
 const mobileModeButtons = document.getElementById("mobileModeButtons");
 const mobileModeDrag = document.getElementById("mobileModeDrag");
+const mobileArcadeHud = document.getElementById("mobileArcadeHud");
+const mobileLiveScore = document.getElementById("mobileLiveScore");
+const mobileLiveLevel = document.getElementById("mobileLiveLevel");
+const mobileLiveCombo = document.getElementById("mobileLiveCombo");
+const mobileComboFill = document.getElementById("mobileComboFill");
+const mobileLiveHealth = document.getElementById("mobileLiveHealth");
+const mobileHealthFill = document.getElementById("mobileHealthFill");
+const mobileRealityBadge = document.getElementById("mobileRealityBadge");
+const mobilePowerBadge = document.getElementById("mobilePowerBadge");
+const mobileObjectiveText = document.getElementById("mobileObjectiveText");
+const mobileObjectiveProgress = document.getElementById("mobileObjectiveProgress");
+
 
 // ============================================================================
 // 3. STORAGE & PERSISTENT METRICS (SAFE LOCALSTORAGE)
@@ -168,6 +180,9 @@ function syncMobileInterface() {
   mobileGameDpad?.classList.toggle("drag-hidden", touchMode === "drag");
   mobileDragMessage?.classList.toggle("active", touchMode === "drag");
   mobilePlayAudioBtn.classList.toggle("muted", !audioEnabled);
+  if (mobileArcadeHud) mobileArcadeHud.classList.toggle("visible", gameState === "PLAYING" || gameState === "PAUSED");
+  if (mobileObjectiveText && currentMission) mobileObjectiveText.textContent = currentMission.text;
+  if (mobileObjectiveProgress && currentMission) mobileObjectiveProgress.textContent = `(${Math.min(currentMission.count, currentMission.target)}/${currentMission.target})`;
 }
 
 function mobileGoHome() {
@@ -1002,6 +1017,12 @@ function updatePowerUpHUD() {
     powerDetailText.textContent = `${Math.ceil(powerUp.timer)}s`;
     powerDetailText.style.color = "var(--neon-amber)";
   }
+
+  if (mobilePowerBadge) {
+    mobilePowerBadge.textContent = powerUp.type === "NONE"
+      ? "POWER: NONE"
+      : `${powerUp.type} ${Math.ceil(powerUp.timer)}s`;
+  }
 }
 
 // ============================================================================
@@ -1792,6 +1813,14 @@ function updateRealityShift(deltaTime) {
   }
 
   updateRealityShiftHUD();
+  if (mobileRealityBadge) {
+    const state = realityShift.state;
+    mobileRealityBadge.textContent = state === "ACTIVE" && realityShift.currentEvent
+      ? `⚡ ${realityShift.currentEvent.name}`
+      : state === "WARNING" && realityShift.currentEvent
+        ? `⚠ INCOMING: ${realityShift.currentEvent.name}`
+        : "REALITY: STABLE";
+  }
 }
 
 function endRealityShift() {
@@ -2497,6 +2526,13 @@ function updateHUD() {
   healthDisplay.textContent = `${Math.max(0, health)}%`;
   healthFill.style.width = `${Math.max(0, health)}%`;
   levelDisplay.textContent = String(level).padStart(2, "0");
+
+  if (mobileLiveScore) mobileLiveScore.textContent = String(score).padStart(5, "0");
+  if (mobileLiveLevel) mobileLiveLevel.textContent = String(level).padStart(2, "0");
+  if (mobileLiveCombo) mobileLiveCombo.textContent = `${combo}x`;
+  if (mobileComboFill) mobileComboFill.style.width = `${Math.min(100, (combo / 30) * 100)}%`;
+  if (mobileLiveHealth) mobileLiveHealth.textContent = `${Math.max(0, health)}%`;
+  if (mobileHealthFill) mobileHealthFill.style.width = `${Math.max(0, health)}%`;
 }
 
 // Button listeners
