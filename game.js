@@ -105,6 +105,8 @@ const mobilePlayAudioBtn = document.getElementById("mobilePlayAudioBtn");
 const mobileAudioGlyph = document.getElementById("mobileAudioGlyph");
 const mobileAudioText = document.getElementById("mobileAudioText");
 const mobilePlayAudioGlyph = document.getElementById("mobilePlayAudioGlyph");
+const mobileGameDpad = document.getElementById("mobileGameDpad");
+const mobileDragMessage = document.getElementById("mobileDragMessage");
 const mobileModeButtons = document.getElementById("mobileModeButtons");
 const mobileModeDrag = document.getElementById("mobileModeDrag");
 
@@ -163,6 +165,8 @@ function syncMobileInterface() {
 
   mobileModeButtons?.classList.toggle("mode-active", touchMode === "buttons");
   mobileModeDrag?.classList.toggle("mode-active", touchMode === "drag");
+  mobileGameDpad?.classList.toggle("drag-hidden", touchMode === "drag");
+  mobileDragMessage?.classList.toggle("active", touchMode === "drag");
   mobilePlayAudioBtn.classList.toggle("muted", !audioEnabled);
 }
 
@@ -2508,6 +2512,35 @@ btnRestart.addEventListener("click", () => {
   AudioSFX.playButton();
   restartGame();
 });
+
+
+// Dedicated mobile D-pad. It directly drives the same input flags used by WASD/arrows.
+if (mobileGameDpad) {
+  mobileGameDpad.querySelectorAll("[data-mobile-key]").forEach((button) => {
+    const keyName = button.dataset.mobileKey;
+    const press = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      getAudioContext();
+      if (gameState !== "PLAYING" || touchMode !== "buttons") return;
+      if (button.setPointerCapture) {
+        try { button.setPointerCapture(event.pointerId); } catch {}
+      }
+      keys[keyName] = true;
+      button.classList.add("pressed");
+    };
+    const release = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      keys[keyName] = false;
+      button.classList.remove("pressed");
+    };
+    button.addEventListener("pointerdown", press);
+    button.addEventListener("pointerup", release);
+    button.addEventListener("pointercancel", release);
+    button.addEventListener("pointerleave", release);
+  });
+}
 
 // Dedicated mobile interface actions
 if (mobilePlayBtn) {
