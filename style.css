@@ -3,16 +3,10 @@
    Pure Vanilla CSS - Futuristic & Glitch Cyberpunk Theme
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   1. DESIGN TOKENS & CSS VARIABLES
-   Centralized color palette, shadows, and fonts for easy updates
-   -------------------------------------------------------------------------- */
 :root {
-  /* Color Palette */
   --bg-deep: #060810;
   --bg-panel: rgba(14, 18, 34, 0.85);
   --bg-card: rgba(22, 28, 52, 0.7);
-  
   --neon-cyan: #00f0ff;
   --neon-cyan-glow: rgba(0, 240, 255, 0.4);
   --neon-magenta: #ff0055;
@@ -20,30 +14,18 @@
   --neon-green: #00ff88;
   --neon-amber: #ffb703;
   --neon-red: #ff3344;
-  
   --text-primary: #f1f5f9;
   --text-muted: #94a3b8;
   --text-cyber: #38bdf8;
-
-  /* Typography Stacks (No external downloads required) */
   --font-display: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
   --font-mono: 'Consolas', 'Courier New', Courier, monospace;
-
-  /* Sizing & Borders */
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
   --border-neon: 1px solid rgba(0, 240, 255, 0.25);
 }
 
-/* --------------------------------------------------------------------------
-   2. RESET & BASE LAYOUT
-   -------------------------------------------------------------------------- */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
   width: 100%;
@@ -62,14 +44,10 @@ body {
   position: relative;
 }
 
-/* Subtle Animated Cyber Grid Background in pure CSS */
 .cyber-grid-bg {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: 
+  inset: 0;
+  background-image:
     linear-gradient(rgba(0, 240, 255, 0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 240, 255, 0.04) 1px, transparent 1px);
   background-size: 40px 40px;
@@ -77,10 +55,6 @@ body {
   z-index: 0;
 }
 
-/* --------------------------------------------------------------------------
-   3. MAIN APPLICATION CONTAINER
-   Glassmorphic container wrapping all game modules
-   -------------------------------------------------------------------------- */
 #game-app {
   position: relative;
   z-index: 1;
@@ -95,15 +69,12 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  box-shadow: 
+  box-shadow:
     0 20px 50px rgba(0, 0, 0, 0.8),
     0 0 30px rgba(0, 240, 255, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-/* --------------------------------------------------------------------------
-   4. HEADER & GLITCH TEXT EFFECT
-   -------------------------------------------------------------------------- */
 .game-header {
   text-align: center;
   display: flex;
@@ -112,32 +83,22 @@ body {
   gap: 6px;
 }
 
-.glitch-wrapper {
-  position: relative;
-  display: inline-block;
-}
+.glitch-wrapper { position: relative; display: inline-block; }
 
 .game-title {
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 900;
   letter-spacing: 6px;
-  color: #ffffff;
-  text-transform: uppercase;
+  color: #fff;
   position: relative;
-  text-shadow: 
-    0 0 10px var(--neon-cyan-glow),
-    0 0 20px var(--neon-cyan-glow);
+  text-shadow: 0 0 10px var(--neon-cyan-glow), 0 0 20px var(--neon-cyan-glow);
 }
 
-/* Pure CSS Glitch Animation layers using data-text attribute */
 .game-title::before,
 .game-title::after {
   content: attr(data-text);
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0; width: 100%; height: 100%;
   clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
 }
 
@@ -179,10 +140,6 @@ body {
   text-shadow: 0 0 8px var(--neon-magenta-glow);
 }
 
-/* --------------------------------------------------------------------------
-   5. HEADS-UP DISPLAY (HUD)
-   Score, Best Score, Combo, Health Bar, and Level metrics
-   -------------------------------------------------------------------------- */
 .hud-panel {
   display: grid;
   grid-template-columns: 1fr 1fr 0.8fr 1.5fr 0.7fr;
@@ -203,14 +160,10 @@ body {
   overflow: hidden;
 }
 
-/* Top accent line on HUD cards */
 .hud-card::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
+  top: 0; left: 0; width: 100%; height: 2px;
   background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
 }
 
@@ -231,7 +184,6 @@ body {
   text-shadow: 0 0 8px var(--neon-cyan-glow);
 }
 
-/* Health Bar Specific Layout */
 .health-card {
   display: flex;
   flex-direction: column;
@@ -265,10 +217,6 @@ body {
   transition: width 0.25s ease;
 }
 
-/* --------------------------------------------------------------------------
-   5.5 SYSTEM STATUS STRIP (REALITY SHIFT & POWER-UPS)
-   Displays live simulation stability, active anomaly title, and power-up countdowns
-   -------------------------------------------------------------------------- */
 .status-strip {
   display: flex;
   justify-content: space-between;
@@ -294,45 +242,28 @@ body {
 }
 
 .reality-badge-box,
-.power-badge-box {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+.power-badge-box { display: flex; align-items: center; gap: 8px; }
 
 .reality-dot,
 .power-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--neon-cyan);
-  box-shadow: 0 0 8px var(--neon-cyan);
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--neon-cyan); box-shadow: 0 0 8px var(--neon-cyan);
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.power-dot {
-  background: #64748b;
-  box-shadow: none;
-}
+.power-dot { background: #64748b; box-shadow: none; }
 
 .reality-status-text,
 .power-status-text {
   font-weight: 700;
   letter-spacing: 1.2px;
   color: var(--neon-cyan);
-  transition: color 0.3s ease;
 }
 
-.power-status-text {
-  color: var(--text-muted);
-}
+.power-status-text { color: var(--text-muted); }
 
 .reality-event-box,
-.power-detail-box {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+.power-detail-box { display: flex; align-items: center; gap: 10px; }
 
 .reality-event-name {
   color: var(--neon-magenta);
@@ -352,9 +283,6 @@ body {
   letter-spacing: 1px;
 }
 
-/* --------------------------------------------------------------------------
-   5.6 MISSION & MINI CHALLENGE STRIP
-   -------------------------------------------------------------------------- */
 .mission-strip {
   display: flex;
   align-items: center;
@@ -373,49 +301,26 @@ body {
   background: rgba(255, 183, 3, 0.18);
   color: var(--neon-amber);
   border: 1px solid rgba(255, 183, 3, 0.45);
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  padding: 2px 6px; border-radius: 3px;
+  font-size: 0.7rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
 }
 
-.mission-text {
-  color: #ffffff;
-  font-weight: 700;
-  letter-spacing: 1px;
-  flex: 1;
-}
-
-.mission-progress {
-  color: var(--neon-cyan);
-  font-weight: 800;
-}
-
+.mission-text { color: #fff; font-weight: 700; letter-spacing: 1px; flex: 1; }
+.mission-progress { color: var(--neon-cyan); font-weight: 800; }
 .mission-bounty {
-  color: var(--neon-green);
-  font-weight: 800;
+  color: var(--neon-green); font-weight: 800;
   background: rgba(0, 255, 136, 0.12);
   border: 1px solid rgba(0, 255, 136, 0.3);
-  padding: 2px 6px;
-  border-radius: 3px;
-  letter-spacing: 1px;
+  padding: 2px 6px; border-radius: 3px; letter-spacing: 1px;
 }
 
-/* --------------------------------------------------------------------------
-   6. CANVAS VIEWPORT
-   Houses the HTML5 canvas with cyber aesthetic borders and corner brackets
-   -------------------------------------------------------------------------- */
 .canvas-viewport {
   position: relative;
   width: 100%;
   background: #020308;
   border: 1px solid rgba(0, 240, 255, 0.35);
   border-radius: var(--radius-sm);
-  box-shadow: 
-    0 0 25px rgba(0, 240, 255, 0.2),
-    inset 0 0 30px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.2), inset 0 0 30px rgba(0, 0, 0, 0.9);
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -425,7 +330,6 @@ body {
   -webkit-user-select: none;
 }
 
-/* Screen shake impact animation */
 .screen-shake {
   animation: screen-trauma 0.28s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
@@ -439,45 +343,18 @@ body {
   75% { transform: translate3d(-1px, 1px, 0); }
 }
 
-/* Corner bracket markers for futuristic targeting frame look */
 .corner-marker {
   position: absolute;
-  width: 14px;
-  height: 14px;
+  width: 14px; height: 14px;
   border-color: var(--neon-cyan);
   pointer-events: none;
   z-index: 2;
 }
+.top-left { top: 6px; left: 6px; border-top: 2px solid var(--neon-cyan); border-left: 2px solid var(--neon-cyan); }
+.top-right { top: 6px; right: 6px; border-top: 2px solid var(--neon-cyan); border-right: 2px solid var(--neon-cyan); }
+.bottom-left { bottom: 6px; left: 6px; border-bottom: 2px solid var(--neon-cyan); border-left: 2px solid var(--neon-cyan); }
+.bottom-right { bottom: 6px; right: 6px; border-bottom: 2px solid var(--neon-cyan); border-right: 2px solid var(--neon-cyan); }
 
-.top-left {
-  top: 6px;
-  left: 6px;
-  border-top: 2px solid var(--neon-cyan);
-  border-left: 2px solid var(--neon-cyan);
-}
-
-.top-right {
-  top: 6px;
-  right: 6px;
-  border-top: 2px solid var(--neon-cyan);
-  border-right: 2px solid var(--neon-cyan);
-}
-
-.bottom-left {
-  bottom: 6px;
-  left: 6px;
-  border-bottom: 2px solid var(--neon-cyan);
-  border-left: 2px solid var(--neon-cyan);
-}
-
-.bottom-right {
-  bottom: 6px;
-  right: 6px;
-  border-bottom: 2px solid var(--neon-cyan);
-  border-right: 2px solid var(--neon-cyan);
-}
-
-/* Canvas element responsiveness: maintains 16:9 proportion */
 #gameCanvas {
   width: 100%;
   max-width: 800px;
@@ -489,12 +366,8 @@ body {
   -webkit-user-select: none;
 }
 
-/* --------------------------------------------------------------------------
-   6.5 MULTI-DEVICE TOUCH CONTROLS
-   Virtual D-Pad and Touch/Drag controls for touchscreen devices
-   -------------------------------------------------------------------------- */
 .touch-controls-container {
-  display: none; /* Shown via JS detection or @media on touch devices */
+  display: none;
   flex-direction: column;
   align-items: center;
   gap: 10px;
@@ -505,11 +378,8 @@ body {
   touch-action: none;
 }
 
-/* Show touch controls on touch-capable devices */
 body.has-touch .touch-controls-container,
-.touch-controls-container.visible {
-  display: flex;
-}
+.touch-controls-container.visible { display: flex; }
 
 .touch-mode-bar {
   display: flex;
@@ -536,16 +406,10 @@ body.has-touch .touch-controls-container,
 }
 
 .touch-toggle-btn {
-  appearance: none;
-  border: none;
-  background: transparent;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 6px 14px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  appearance: none; border: none; background: transparent;
+  color: var(--text-muted); font-family: var(--font-mono);
+  font-size: 0.75rem; font-weight: 700; padding: 6px 14px;
+  cursor: pointer; transition: all 0.2s ease;
 }
 
 .touch-toggle-btn.active {
@@ -554,7 +418,6 @@ body.has-touch .touch-controls-container,
   box-shadow: inset 0 0 8px var(--neon-cyan-glow);
 }
 
-/* Virtual D-Pad layout */
 .virtual-dpad {
   display: flex;
   flex-direction: column;
@@ -563,23 +426,16 @@ body.has-touch .touch-controls-container,
   touch-action: none;
 }
 
-.dpad-row {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-}
+.dpad-row { display: flex; gap: 8px; justify-content: center; }
 
 .dpad-btn {
-  width: 62px;
-  height: 52px;
+  width: 62px; height: 52px;
   background: rgba(14, 20, 42, 0.88);
   border: 1px solid rgba(0, 240, 255, 0.35);
   border-radius: 8px;
   color: var(--neon-cyan);
   font-size: 1.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), inset 0 0 8px rgba(0, 240, 255, 0.08);
   transition: background 0.1s, transform 0.1s, box-shadow 0.1s;
@@ -592,7 +448,7 @@ body.has-touch .touch-controls-container,
 .dpad-btn:active,
 .dpad-btn.pressed {
   background: var(--neon-cyan);
-  color: #000000;
+  color: #000;
   box-shadow: 0 0 18px rgba(0, 240, 255, 0.85);
   transform: scale(0.95);
 }
@@ -610,10 +466,6 @@ body.has-touch .touch-controls-container,
   font-weight: 700;
 }
 
-/* --------------------------------------------------------------------------
-   7. CONTROL BUTTONS
-   Interactive controls with sci-fi chamfered edges and neon glow
-   -------------------------------------------------------------------------- */
 .controls-panel {
   display: flex;
   justify-content: center;
@@ -623,283 +475,398 @@ body.has-touch .touch-controls-container,
 }
 
 .btn {
-  appearance: none;
-  border: none;
-  background: transparent;
-  font-family: var(--font-mono);
-  font-size: 0.92rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  padding: 10px 20px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: all 0.2s ease-in-out;
-  position: relative;
+  appearance: none; border: none; background: transparent;
+  font-family: var(--font-mono); font-size: 0.92rem; font-weight: 700;
+  letter-spacing: 1.5px; padding: 10px 20px; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  transition: all 0.2s ease-in-out; position: relative;
   clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
 }
 
-.btn:focus-visible {
-  outline: 2px solid var(--neon-cyan);
-  outline-offset: 4px;
-}
+.btn:focus-visible { outline: 2px solid var(--neon-cyan); outline-offset: 4px; }
 
-/* Primary Button (Start) */
 .btn-primary {
-  background: rgba(0, 240, 255, 0.15);
-  color: var(--neon-cyan);
-  border: 1px solid var(--neon-cyan);
-  box-shadow: 0 0 14px var(--neon-cyan-glow);
+  background: rgba(0, 240, 255, 0.15); color: var(--neon-cyan);
+  border: 1px solid var(--neon-cyan); box-shadow: 0 0 14px var(--neon-cyan-glow);
 }
+.btn-primary:hover { background: var(--neon-cyan); color: #000; box-shadow: 0 0 24px rgba(0,240,255,.7); transform: translateY(-2px); }
 
-.btn-primary:hover {
-  background: var(--neon-cyan);
-  color: #000000;
-  box-shadow: 0 0 24px rgba(0, 240, 255, 0.7);
-  transform: translateY(-2px);
-}
-
-/* Secondary Button (Pause) */
 .btn-secondary {
-  background: rgba(255, 183, 3, 0.12);
-  color: var(--neon-amber);
-  border: 1px solid var(--neon-amber);
-  box-shadow: 0 0 12px rgba(255, 183, 3, 0.3);
+  background: rgba(255, 183, 3, 0.12); color: var(--neon-amber);
+  border: 1px solid var(--neon-amber); box-shadow: 0 0 12px rgba(255,183,3,.3);
 }
+.btn-secondary:hover { background: var(--neon-amber); color: #000; box-shadow: 0 0 22px rgba(255,183,3,.6); transform: translateY(-2px); }
 
-.btn-secondary:hover {
-  background: var(--neon-amber);
-  color: #000000;
-  box-shadow: 0 0 22px rgba(255, 183, 3, 0.6);
-  transform: translateY(-2px);
-}
-
-/* Danger Button (Restart) */
 .btn-danger {
-  background: rgba(255, 0, 85, 0.15);
-  color: var(--neon-magenta);
-  border: 1px solid var(--neon-magenta);
-  box-shadow: 0 0 14px var(--neon-magenta-glow);
+  background: rgba(255,0,85,.15); color: var(--neon-magenta);
+  border: 1px solid var(--neon-magenta); box-shadow: 0 0 14px var(--neon-magenta-glow);
 }
+.btn-danger:hover { background: var(--neon-magenta); color: #fff; box-shadow: 0 0 24px rgba(255,0,85,.7); transform: translateY(-2px); }
 
-.btn-danger:hover {
-  background: var(--neon-magenta);
-  color: #ffffff;
-  box-shadow: 0 0 24px rgba(255, 0, 85, 0.7);
-  transform: translateY(-2px);
-}
-
-/* Audio Toggle Button */
 .btn-audio {
-  background: rgba(0, 240, 255, 0.1);
-  color: var(--text-primary);
-  border: 1px solid rgba(0, 240, 255, 0.3);
+  background: rgba(0,240,255,.1); color: var(--text-primary);
+  border: 1px solid rgba(0,240,255,.3);
 }
+.btn-audio:hover { background: rgba(0,240,255,.25); color: var(--neon-cyan); box-shadow: 0 0 14px var(--neon-cyan-glow); transform: translateY(-2px); }
+.btn-audio.muted { border-color: rgba(255,51,68,.4); color: var(--neon-red); background: rgba(255,51,68,.1); }
+.btn:active { transform: translateY(1px) scale(.98); }
 
-.btn-audio:hover {
-  background: rgba(0, 240, 255, 0.25);
-  color: var(--neon-cyan);
-  box-shadow: 0 0 14px var(--neon-cyan-glow);
-  transform: translateY(-2px);
-}
-
-.btn-audio.muted {
-  border-color: rgba(255, 51, 68, 0.4);
-  color: var(--neon-red);
-  background: rgba(255, 51, 68, 0.1);
-}
-
-.btn:active {
-  transform: translateY(1px) scale(0.98);
-}
-
-/* --------------------------------------------------------------------------
-   8. STATUS BAR
-   Displays live system status message with pulsating neon dot
-   -------------------------------------------------------------------------- */
 .system-status {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 14px;
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-mono); font-size: .8rem; color: var(--text-muted);
+  border-top: 1px solid rgba(255,255,255,.08); padding-top: 14px;
 }
-
 .status-pulse {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: var(--neon-cyan);
-  box-shadow: 0 0 10px var(--neon-cyan);
+  width: 8px; height: 8px; border-radius: 50%;
+  background-color: var(--neon-cyan); box-shadow: 0 0 10px var(--neon-cyan);
   animation: pulse-glow 2s infinite ease-in-out;
 }
-
 @keyframes pulse-glow {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.35; transform: scale(0.8); }
+  0%,100% { opacity:1; transform:scale(1); }
+  50% { opacity:.35; transform:scale(.8); }
 }
+.status-label { color: var(--text-muted); font-weight: 700; letter-spacing: 1px; }
+.status-text { color: var(--neon-cyan); letter-spacing: 1px; }
 
-.status-label {
-  color: var(--text-muted);
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-.status-text {
-  color: var(--neon-cyan);
-  letter-spacing: 1px;
-}
-
-/* --------------------------------------------------------------------------
-   9. RESPONSIVE BREAKPOINTS (Mobile, Tablet, Desktop)
-   -------------------------------------------------------------------------- */
-
-/* Tablet View */
 @media (max-width: 768px) {
-  #game-app {
-    padding: 18px 14px;
-    gap: 14px;
-  }
-
-  .hud-panel {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-  }
-
-  .health-card {
-    grid-column: 1 / 3;
-  }
-
-  .hud-card {
-    padding: 8px 10px;
-  }
-
-  .hud-val {
-    font-size: 1.05rem;
-  }
-
-  .btn {
-    padding: 9px 16px;
-    font-size: 0.82rem;
-  }
-
-  .dpad-btn {
-    width: 58px;
-    height: 48px;
-  }
+  #game-app { padding: 18px 14px; gap: 14px; }
+  .hud-panel { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .health-card { grid-column: 1 / 3; }
+  .hud-card { padding: 8px 10px; }
+  .hud-val { font-size: 1.05rem; }
+  .btn { padding: 9px 16px; font-size: .82rem; }
+  .dpad-btn { width: 58px; height: 48px; }
 }
 
-/* Mobile View (Phones up to 520px) */
 @media (max-width: 520px) {
   body {
-    padding: 6px 4px;
+    padding: 0;
+    min-height: 100dvh;
+    align-items: stretch;
+    background: #02040a;
   }
 
   #game-app {
-    padding: 12px 10px;
-    gap: 12px;
-    border-radius: var(--radius-md);
-  }
-
-  /* Compact 2-column HUD */
-  .hud-panel {
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
-  }
-
-  /* Make health span full width */
-  .health-card {
-    grid-column: 1 / -1;
-  }
-
-  .status-strip {
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .mission-strip {
-    font-size: 0.72rem;
-    padding: 5px 8px;
-    flex-wrap: wrap;
-  }
-
-  /* 2x2 grid for buttons */
-  .controls-panel {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
     width: 100%;
-    gap: 6px;
+    max-width: none;
+    min-height: 100dvh;
+    padding: 10px;
+    gap: 10px;
+    border: 0;
+    border-radius: 0;
+    background: rgba(6, 8, 16, .98);
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
-  .btn {
-    width: 100%;
-    min-height: 40px;
-    padding: 8px 10px;
-    font-size: 0.78rem;
+  .game-header {
+    gap: 2px;
+    flex: 0 0 auto;
+  }
+
+  .game-title {
+    font-size: clamp(1.55rem, 8vw, 2.1rem);
+    letter-spacing: 3px;
+  }
+
+  .game-subtitle {
+    font-size: .68rem;
     letter-spacing: 1px;
   }
 
-  .dpad-btn {
-    width: 54px;
-    height: 46px;
-    font-size: 1.15rem;
+  /* The game screen is the priority on phones. */
+  .canvas-viewport {
+    order: 1;
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+    border-radius: 8px;
+    min-width: 0;
   }
 
-  .system-status {
-    font-size: 0.7rem;
-    flex-wrap: wrap;
-    padding-top: 10px;
+  #gameCanvas {
+    width: 100%;
+    height: auto;
+    max-height: none;
   }
-}
 
-/* Ultra-compact phones (<= 360px: e.g. 320px screens) */
-@media (max-width: 360px) {
-  .game-title {
-    letter-spacing: 2px;
+  .hud-panel {
+    order: 2;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
   }
 
   .hud-card {
-    padding: 6px 8px;
+    min-width: 0;
+    padding: 6px 7px;
+    flex-direction: column;
+    gap: 2px;
+    justify-content: center;
+    min-height: 42px;
   }
 
-  .hud-label {
-    font-size: 0.65rem;
+  .hud-label { font-size: .56rem; letter-spacing: .8px; }
+  .hud-val { font-size: .9rem; }
+  .health-card { grid-column: auto; }
+  .health-track { height: 6px; }
+
+  .status-strip {
+    order: 3;
+    gap: 5px;
   }
 
-  .hud-val {
-    font-size: 0.95rem;
+  .reality-indicator-panel,
+  .power-indicator-panel {
+    min-width: 0;
+    min-height: 32px;
+    padding: 5px 7px;
+    font-size: .58rem;
   }
 
-  .dpad-btn {
-    width: 48px;
-    height: 42px;
-    font-size: 1rem;
-  }
-}
-
-/* --------------------------------------------------------------------------
-   10. ACCESSIBILITY: PREFERS-REDUCED-MOTION
-   Respects user OS settings by disabling aggressive glitch jitter & flashes
-   -------------------------------------------------------------------------- */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-
-  .game-title::before,
-  .game-title::after {
+  .reality-event-box,
+  .power-detail-box {
     display: none !important;
   }
 
-  .screen-shake {
-    animation: none !important;
+  .reality-status-text,
+  .power-status-text {
+    font-size: .58rem;
+    letter-spacing: .5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mission-strip {
+    order: 4;
+    padding: 5px 7px;
+    gap: 5px;
+    font-size: .58rem;
+    min-height: 28px;
+  }
+
+  .mission-badge { font-size: .55rem; padding: 2px 4px; }
+  .mission-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mission-bounty { display: none; }
+
+  .touch-controls-container {
+    order: 5;
+    gap: 8px;
+    margin: 0;
+    flex: 0 0 auto;
+  }
+
+  .touch-mode-bar {
+    display: none;
+  }
+
+  .virtual-dpad {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(56px, 18vw));
+    grid-template-rows: repeat(2, minmax(50px, 15vw));
+    gap: 7px;
+    width: min(100%, 230px);
+  }
+
+  .dpad-row { display: contents; }
+
+  .dpad-btn {
+    width: 100%;
+    height: 100%;
+    min-height: 50px;
+    font-size: 1.35rem;
+    border-radius: 12px;
+  }
+
+  .dpad-top { grid-column: 2; grid-row: 1; }
+  .dpad-mid { display: contents; }
+  #dpadLeft { grid-column: 1; grid-row: 2; }
+  #dpadDown { grid-column: 2; grid-row: 2; }
+  #dpadRight { grid-column: 3; grid-row: 2; }
+
+  .touch-drag-hint { display: none !important; }
+
+  .controls-panel {
+    order: 6;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+  }
+
+  .controls-panel .btn {
+    min-height: 42px;
+    padding: 7px 5px;
+    font-size: .65rem;
+    letter-spacing: .6px;
+  }
+
+  /* Mobile gameplay controls are simplified; start/restart remain available
+     as fallback, while pause/audio stay compact. */
+  .controls-panel .btn-primary { grid-column: 1 / -1; }
+  .system-status {
+    order: 7;
+    font-size: .58rem;
+    gap: 6px;
+    padding-top: 7px;
+    min-height: 20px;
+  }
+
+  /* Make the browser viewport feel like a dedicated game surface. */
+  .cyber-grid-bg { opacity: .45; }
+}
+
+/* True touch phones: separate control-panel chrome from the active game. */
+@media (max-width: 520px) and (pointer: coarse) {
+  body.mobile-play-active #game-app {
+    padding: 0;
+    gap: 0;
+    min-height: 100dvh;
+    height: 100dvh;
+  }
+
+  body.mobile-play-active .cyber-grid-bg,
+  body.mobile-play-active .game-header,
+  body.mobile-play-active .status-strip,
+  body.mobile-play-active .mission-strip,
+  body.mobile-play-active .controls-panel,
+  body.mobile-play-active .system-status {
+    display: none !important;
+  }
+
+  body.mobile-play-active .hud-panel {
+    position: fixed;
+    z-index: 20;
+    top: max(8px, env(safe-area-inset-top));
+    left: 8px;
+    right: 8px;
+    width: auto;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4px;
+    pointer-events: none;
+  }
+
+  body.mobile-play-active .hud-card {
+    min-height: 34px;
+    padding: 4px 5px;
+    background: rgba(2, 4, 10, .62);
+    border-color: rgba(0, 240, 255, .18);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+
+  body.mobile-play-active .hud-label { font-size: .5rem; }
+  body.mobile-play-active .hud-val { font-size: .78rem; }
+  body.mobile-play-active .health-track { height: 5px; }
+
+  body.mobile-play-active .canvas-viewport {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100dvh;
+    min-height: 0;
+    border: 0;
+    border-radius: 0;
+    z-index: 1;
+    background: #020308;
+  }
+
+  body.mobile-play-active #gameCanvas {
+    width: 100vw;
+    height: auto;
+    max-width: none;
+    aspect-ratio: 16 / 9;
+  }
+
+  /* Pause button becomes an unobtrusive floating control. */
+  body.mobile-play-active .mobile-pause-fab {
+    display: flex !important;
+  }
+
+  body.mobile-play-active .touch-controls-container {
+    display: flex !important;
+    position: fixed;
+    z-index: 30;
+    left: 0;
+    right: 0;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    pointer-events: none;
+    margin: 0;
+  }
+
+  body.mobile-play-active .virtual-dpad {
+    pointer-events: auto;
+    width: min(56vw, 230px);
+    grid-template-columns: repeat(3, minmax(52px, 18vw));
+    grid-template-rows: repeat(2, minmax(48px, 14vw));
+    gap: 6px;
+  }
+
+  body.mobile-play-active .dpad-btn {
+    min-height: 48px;
+    background: rgba(8, 12, 24, .52);
+    border-color: rgba(0, 240, 255, .45);
+    box-shadow: 0 4px 16px rgba(0,0,0,.5), inset 0 0 12px rgba(0,240,255,.08);
+  }
+
+  body.mobile-play-active .touch-mode-bar,
+  body.mobile-play-active .touch-drag-hint {
+    display: none !important;
+  }
+
+  /* Keep the actual control panel available as a tiny overlay only when needed. */
+  body.mobile-play-active .mobile-game-actions {
+    display: flex !important;
   }
 }
 
+/* Mobile home/control-panel mode. */
+@media (max-width: 520px) and (pointer: coarse) {
+  body:not(.mobile-play-active) .canvas-viewport {
+    min-height: min(58dvh, 420px);
+  }
+
+  body:not(.mobile-play-active) .hud-panel,
+  body:not(.mobile-play-active) .status-strip,
+  body:not(.mobile-play-active) .mission-strip {
+    display: none;
+  }
+}
+
+/* Tablets / landscape phones: use a wider play field and compact controls. */
+@media (max-width: 900px) and (orientation: landscape) and (pointer: coarse) {
+  body.mobile-play-active #gameCanvas {
+    width: min(100vw, 100dvh * 1.7778);
+  }
+
+  body.mobile-play-active .virtual-dpad {
+    width: min(34vw, 210px);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 44px);
+  }
+
+  body.mobile-play-active .hud-panel {
+    left: 12px;
+    right: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .game-title { letter-spacing: 2px; }
+  .hud-card { padding: 5px 6px; }
+  .hud-label { font-size: .52rem; }
+  .hud-val { font-size: .82rem; }
+  .dpad-btn { min-height: 46px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  .game-title::before,
+  .game-title::after { display: none !important; }
+}
