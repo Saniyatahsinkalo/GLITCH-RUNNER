@@ -83,6 +83,29 @@ const dpadDown = document.getElementById("dpadDown");
 const dpadLeft = document.getElementById("dpadLeft");
 const dpadRight = document.getElementById("dpadRight");
 
+// Mobile-only interface
+const mobileHomeScreen = document.getElementById("mobileHomeScreen");
+const mobilePlayActions = document.getElementById("mobilePlayActions");
+const mobilePauseScreen = document.getElementById("mobilePauseScreen");
+const mobileGameOverScreen = document.getElementById("mobileGameOverScreen");
+const mobileBestScore = document.getElementById("mobileBestScore");
+const mobileFinalScore = document.getElementById("mobileFinalScore");
+const mobileFinalBest = document.getElementById("mobileFinalBest");
+const mobileFinalCombo = document.getElementById("mobileFinalCombo");
+const mobileFinalLevel = document.getElementById("mobileFinalLevel");
+const mobilePlayBtn = document.getElementById("mobilePlayBtn");
+const mobilePauseBtn = document.getElementById("mobilePauseBtn");
+const mobileResumeBtn = document.getElementById("mobileResumeBtn");
+const mobilePauseRestartBtn = document.getElementById("mobilePauseRestartBtn");
+const mobilePauseHomeBtn = document.getElementById("mobilePauseHomeBtn");
+const mobilePlayAgainBtn = document.getElementById("mobilePlayAgainBtn");
+const mobileGameOverHomeBtn = document.getElementById("mobileGameOverHomeBtn");
+const mobileAudioBtn = document.getElementById("mobileAudioBtn");
+const mobilePlayAudioBtn = document.getElementById("mobilePlayAudioBtn");
+const mobileAudioGlyph = document.getElementById("mobileAudioGlyph");
+const mobileAudioText = document.getElementById("mobileAudioText");
+const mobilePlayAudioGlyph = document.getElementById("mobilePlayAudioGlyph");
+
 // ============================================================================
 // 3. STORAGE & PERSISTENT METRICS (SAFE LOCALSTORAGE)
 // ============================================================================
@@ -109,6 +132,46 @@ let bestCombo = Storage.get("glitch_runner_best_combo", 0);
 let highestLevel = Storage.get("glitch_runner_highest_level", 1);
 let touchMode = Storage.get("glitch_runner_touch_mode", "buttons"); // "buttons" | "drag"
 let audioEnabled = Storage.get("glitch_runner_audio_enabled", true);
+
+function isMobileTouchDevice() {
+  return window.matchMedia("(max-width: 520px) and (pointer: coarse)").matches;
+}
+
+function syncMobileInterface() {
+  if (!isMobileTouchDevice()) return;
+
+  document.body.classList.toggle("mobile-play-active", gameState === "PLAYING" || gameState === "PAUSED");
+
+  mobileHomeScreen.classList.toggle("visible", gameState === "READY");
+  mobilePlayActions.classList.toggle("visible", gameState === "PLAYING");
+  mobilePauseScreen.classList.toggle("visible", gameState === "PAUSED");
+  mobileGameOverScreen.classList.toggle("visible", gameState === "GAME_OVER");
+
+  mobileBestScore.textContent = String(bestScore).padStart(5, "0");
+  mobileFinalScore.textContent = String(score).padStart(5, "0");
+  mobileFinalBest.textContent = String(bestScore).padStart(5, "0");
+  mobileFinalCombo.textContent = `${maxCombo}x`;
+  mobileFinalLevel.textContent = String(level).padStart(2, "0");
+
+  const audioLabel = audioEnabled ? "AUDIO ON" : "AUDIO OFF";
+  mobileAudioText.textContent = audioLabel;
+  mobileAudioGlyph.textContent = audioEnabled ? "🔊" : "🔇";
+  mobilePlayAudioGlyph.textContent = audioEnabled ? "🔊" : "🔇";
+  mobileAudioBtn.classList.toggle("muted", !audioEnabled);
+  mobilePlayAudioBtn.classList.toggle("muted", !audioEnabled);
+}
+
+function mobileGoHome() {
+  stopGameLoop();
+  gameState = "READY";
+  isNewHighScore = false;
+  resetGameObjects();
+  resetRealityShift();
+  resetPowerUp();
+  pickNextMission();
+  syncMobileInterface();
+  renderReadyScreen();
+}
 
 // ============================================================================
 // 4. CENTRALIZED GAME STATE & LIFECYCLE
@@ -2265,6 +2328,7 @@ function startGame() {
 
   lastTimestamp = performance.now();
   animationFrameId = requestAnimationFrame(gameLoop);
+  syncMobileInterface();
 }
 
 function pauseGame() {
@@ -2281,6 +2345,7 @@ function pauseGame() {
   statusDot.style.boxShadow = "0 0 10px var(--neon-amber)";
 
   drawPauseOverlay();
+  syncMobileInterface();
 }
 
 function resumeGame() {
@@ -2298,6 +2363,7 @@ function resumeGame() {
 
   lastTimestamp = performance.now();
   animationFrameId = requestAnimationFrame(gameLoop);
+  syncMobileInterface();
 }
 
 function restartGame() {
@@ -2314,6 +2380,7 @@ function restartGame() {
   statusDot.style.boxShadow = "0 0 10px var(--neon-cyan)";
 
   renderReadyScreen();
+  syncMobileInterface();
 }
 
 function endGame() {
@@ -2356,6 +2423,7 @@ function endGame() {
   glitches.forEach(drawGlitch);
   drawPlayer();
   drawGameOverOverlay();
+  syncMobileInterface();
 }
 
 function resetGameObjects() {
@@ -2436,6 +2504,75 @@ btnRestart.addEventListener("click", () => {
   restartGame();
 });
 
+// Dedicated mobile interface actions
+if (mobilePlayBtn) {
+  mobilePlayBtn.addEventListener("click", () => {
+    AudioSFX.playButton();
+    startGame();
+  });
+}
+
+if (mobilePauseBtn) {
+  mobilePauseBtn.addEventListener("click", () => {
+    AudioSFX.playButton();
+    pauseGame();
+  });
+}
+
+if (mobileResumeBtn) {
+  mobileResumeBtn.addEventListener("click", () => {
+    AudioSFX.playButton();
+    resumeGame();
+  });
+}
+
+if (mobilePauseRestartBtn) {
+  mobilePauseRestartBtn.addEventListener("click", () => {
+    AudioSFX.playButton();
+    restartGame();
+    startGame();
+  });
+}
+
+if (mobilePauseHomeBtn) {
+  mobilePauseHomeBtn.addEventListener("click", () => {
+    AudioSFX.playButton();
+    mobileGoHome();
+  });
+}
+
+if (mobilePlayAgainBtn) {
+  mobilePlayAgainBtn.addEventListener("click", () => {
+    AudioSFX.playButton();
+    startGame();
+  });
+}
+
+if (mobileGameOverHomeBtn) {
+  mobileGameOverHomeBtn.addEventListener("click", () => {
+    AudioSFX.playButton();
+    mobileGoHome();
+  });
+}
+
+function toggleAudioFromMobile() {
+  audioEnabled = !audioEnabled;
+  Storage.set("glitch_runner_audio_enabled", audioEnabled);
+  updateAudioButtonUI();
+  if (audioEnabled) {
+    AudioSFX.playButton();
+  }
+  syncMobileInterface();
+}
+
+if (mobileAudioBtn) {
+  mobileAudioBtn.addEventListener("click", toggleAudioFromMobile);
+}
+
+if (mobilePlayAudioBtn) {
+  mobilePlayAudioBtn.addEventListener("click", toggleAudioFromMobile);
+}
+
 // ============================================================================
 // 19. MAIN GAME LOOP
 // ============================================================================
@@ -2493,13 +2630,15 @@ window.addEventListener("DOMContentLoaded", () => {
   resetPowerUp();
   pickNextMission();
   renderReadyScreen();
+  syncMobileInterface();
 
-  console.log("⚡ GLITCH RUNNER v1.0 engine armed and ready.");
+  console.log("⚡ GLITCH RUNNER v1.1 mobile interface armed and ready.");
 });
 
 window.addEventListener("resize", () => {
   setupHiDPICanvas();
   detectTouchDevice();
+  syncMobileInterface();
   if (gameState === "READY") {
     renderReadyScreen();
   } else if (gameState === "PAUSED") {
