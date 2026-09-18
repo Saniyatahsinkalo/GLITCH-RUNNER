@@ -1562,3 +1562,18 @@ body.has-touch .touch-controls-container,
     gap: 6px !important;
   }
 }
+
+/* MOBILE v1.6 — steering mode must control the actual mobile controller. */
+@media screen and (max-width: 900px) {
+  body.has-touch.mobile-play-active .mobile-game-dpad {
+    display: flex !important;
+  }
+
+  body.has-touch.mobile-play-active .mobile-game-dpad.drag-hidden {
+    display: none !important;
+  }
+
+  body.has-touch.mobile-play-active .mobile-drag-message.active {
+    display: block !important;
+  }
+}
