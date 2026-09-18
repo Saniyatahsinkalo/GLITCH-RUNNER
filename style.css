@@ -717,7 +717,7 @@ body.has-touch .touch-controls-container,
 }
 
 /* True touch phones: separate control-panel chrome from the active game. */
-@media (max-width: 900px) and (pointer: coarse) {
+@media (max-width: 520px) and (pointer: coarse) {
   body.mobile-play-active #game-app {
     padding: 0;
     gap: 0;
@@ -823,7 +823,7 @@ body.has-touch .touch-controls-container,
 }
 
 /* Mobile home/control-panel mode. */
-@media (max-width: 900px) and (pointer: coarse) {
+@media (max-width: 520px) and (pointer: coarse) {
   body:not(.mobile-play-active) .canvas-viewport {
     min-height: min(58dvh, 420px);
   }
@@ -877,7 +877,7 @@ body.has-touch .touch-controls-container,
   display: none;
 }
 
-@media (max-width: 900px) and (pointer: coarse) {
+@media (max-width: 520px) and (pointer: coarse) {
   .mobile-interface {
     display: block;
     position: fixed;
@@ -1207,7 +1207,7 @@ body.has-touch .touch-controls-container,
   }
 }
 
-@media (max-width: 900px) and (pointer: coarse) and (orientation: landscape) {
+@media (max-width: 520px) and (pointer: coarse) and (orientation: landscape) {
   .mobile-brand { font-size: 2rem; margin-bottom: 6px; }
   .mobile-tagline { margin-bottom: 12px; }
   .mobile-best-card { margin-bottom: 10px; padding: 8px 14px; }
@@ -1235,7 +1235,7 @@ body.has-touch .touch-controls-container,
 }
 
 /* Mobile home control panel — settings stay off the gameplay screen. */
-@media (max-width: 900px) and (pointer: coarse) {
+@media (max-width: 520px) and (pointer: coarse) {
   .mobile-control-card {
     width: min(82vw, 300px);
     padding: 10px 12px;
@@ -1281,7 +1281,7 @@ body.has-touch .touch-controls-container,
 
 /* MOBILE D-PAD FIX — laptop-style directional layout.
    Up is centered above Left/Down/Right, never a vertical stack. */
-@media (max-width: 900px) and (pointer: coarse) {
+@media (max-width: 520px) and (pointer: coarse) {
   body.mobile-play-active .touch-controls-container {
     display: block !important;
     position: fixed !important;
@@ -1361,7 +1361,7 @@ body.has-touch .touch-controls-container,
 /* MOBILE GAME CONTROLLER v1.2
    Uses a dedicated D-pad inside the mobile gameplay layer.
    The legacy desktop touch-control strip is completely hidden on phones. */
-@media (max-width: 900px) and (pointer: coarse) {
+@media (max-width: 520px) and (pointer: coarse) {
   body.mobile-play-active .touch-controls-container {
     display: none !important;
   }
@@ -1448,7 +1448,7 @@ body.has-touch .touch-controls-container,
 }
 
 /* MOBILE v1.3 — comfortable, centered game controls */
-@media (max-width: 900px) and (pointer: coarse) {
+@media (max-width: 520px) and (pointer: coarse) {
   body.mobile-play-active .mobile-game-dpad {
     left: 50% !important;
     bottom: max(18px, env(safe-area-inset-bottom)) !important;
@@ -1563,304 +1563,173 @@ body.has-touch .touch-controls-container,
   }
 }
 
-/* MOBILE BREAKPOINT FIX v1.4
-   Android Chrome can report a phone viewport wider than 520 CSS px.
-   Use the touch-device class added by detectTouchDevice() as the mobile switch. */
-body.has-touch .mobile-interface {
-  display: block !important;
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: 100 !important;
-  pointer-events: none !important;
-  font-family: var(--font-mono) !important;
-}
-
-body.has-touch .mobile-screen {
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: 110 !important;
-  display: none !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  pointer-events: auto !important;
-}
-
-body.has-touch .mobile-screen.visible { display: flex !important; }
-
-body.has-touch .mobile-play-actions {
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: 120 !important;
-  pointer-events: none !important;
-}
-
-body.has-touch .mobile-play-actions.visible { display: block !important; }
-
-body.has-touch.mobile-play-active .game-header,
-body.has-touch.mobile-play-active .controls-panel,
-body.has-touch.mobile-play-active .system-status,
-body.has-touch.mobile-play-active .status-strip,
-body.has-touch.mobile-play-active .mission-strip,
-body.has-touch.mobile-play-active .touch-controls-container {
-  display: none !important;
-}
-
-body.has-touch.mobile-play-active #game-app {
-  padding: 0 !important;
-  gap: 0 !important;
-  min-height: 100dvh !important;
-  height: 100dvh !important;
-}
-
-body.has-touch.mobile-play-active .canvas-viewport {
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: 1 !important;
-  width: 100vw !important;
-  height: 100dvh !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: #020308 !important;
-}
-
-body.has-touch.mobile-play-active #gameCanvas {
-  width: 100vw !important;
-  height: auto !important;
-  max-width: none !important;
-  aspect-ratio: 16 / 9 !important;
-}
-
-body.has-touch.mobile-play-active .hud-panel {
-  position: fixed !important;
-  z-index: 125 !important;
-  top: max(7px, env(safe-area-inset-top)) !important;
-  left: 8px !important;
-  right: 112px !important;
-  width: auto !important;
-  margin: 0 !important;
-  display: grid !important;
-  grid-template-columns: repeat(4, minmax(0,1fr)) !important;
-  gap: 4px !important;
-  pointer-events: none !important;
-}
-
-body.has-touch.mobile-play-active .hud-card {
-  min-height: 38px !important;
-  padding: 5px 6px !important;
-  background: rgba(2,4,10,.62) !important;
-  border-color: rgba(0,240,255,.2) !important;
-}
-
-body.has-touch.mobile-play-active .hud-label { font-size: .52rem !important; }
-body.has-touch.mobile-play-active .hud-val { font-size: .78rem !important; }
-
-body.has-touch.mobile-play-active .mobile-game-dpad {
-  position: absolute !important;
-  left: 50% !important;
-  bottom: max(18px, env(safe-area-inset-bottom)) !important;
-  transform: translateX(-50%) !important;
-  width: 220px !important;
-  height: 150px !important;
-  margin: 0 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  gap: 8px !important;
-  pointer-events: auto !important;
-}
-
-body.has-touch.mobile-play-active .mobile-game-dpad > button,
-body.has-touch.mobile-play-active .mobile-game-dpad > div button {
-  width: 64px !important;
-  height: 64px !important;
-  min-width: 64px !important;
-  min-height: 64px !important;
-  max-width: 64px !important;
-  max-height: 64px !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 2px solid rgba(0,240,255,.5) !important;
-  border-radius: 12px !important;
-  background: rgba(8,12,24,.84) !important;
-  color: var(--neon-cyan) !important;
-  font: 900 1.25rem var(--font-mono) !important;
-  touch-action: none !important;
-}
-
-body.has-touch.mobile-play-active .mobile-game-dpad > div {
-  display: flex !important;
-  gap: 8px !important;
-}
-
-body.has-touch.mobile-play-active .mobile-game-dpad button.pressed {
-  background: var(--neon-cyan) !important;
-  color: #000 !important;
-  box-shadow: 0 0 24px rgba(0,240,255,.85) !important;
-}
-
-body.has-touch.mobile-play-active .mobile-fab {
-  width: 50px !important;
-  height: 50px !important;
-  min-width: 50px !important;
-  top: max(8px, env(safe-area-inset-top)) !important;
-}
-
-body.has-touch.mobile-play-active .pause-fab { right: 62px !important; }
-body.has-touch.mobile-play-active .audio-fab { right: 8px !important; }
-
-body.has-touch:not(.mobile-play-active) #game-app {
-  display: none !important;
-}
-
-body.has-touch:not(.mobile-play-active) .mobile-home-screen {
-  display: flex !important;
-}
-
-body.has-touch:not(.mobile-play-active) .mobile-play-actions {
-  display: none !important;
-}
-
-@media (max-width: 360px) {
-  body.has-touch.mobile-play-active .mobile-game-dpad {
-    width: 190px !important;
-    height: 138px !important;
-  }
-  body.has-touch.mobile-play-active .mobile-game-dpad > button,
-  body.has-touch.mobile-play-active .mobile-game-dpad > div button {
-    width: 58px !important;
-    height: 58px !important;
-    min-width: 58px !important;
-    min-height: 58px !important;
-  }
-}
-
-/* MOBILE v1.5 — force phone/tablet presentation by viewport width.
-   This intentionally does not depend on pointer detection, because Android
-   browsers can report unusual pointer/viewport combinations. */
+/* ==========================================================================
+   GLITCH RUNNER MOBILE 2.0 — simple, stable phone presentation
+   This is intentionally one final override layer.
+   ========================================================================== */
 @media screen and (max-width: 900px) {
-  .mobile-interface { display:block !important; }
-
-  body.mobile-play-active .touch-controls-container {
-    display:none !important;
-  }
-
-  body.mobile-play-active .mobile-play-actions {
+  body.has-touch .mobile-interface {
     display:block !important;
     position:fixed !important;
     inset:0 !important;
-    z-index:1000 !important;
+    z-index:100 !important;
     pointer-events:none !important;
   }
 
-  body.mobile-play-active .mobile-game-dpad {
-    display:flex !important;
-    position:absolute !important;
-    left:50% !important;
-    bottom:24px !important;
-    transform:translateX(-50%) !important;
-    width:220px !important;
-    height:150px !important;
-    margin:0 !important;
+  body.has-touch .mobile-screen {
+    position:fixed !important;
+    inset:0 !important;
+    display:none !important;
     flex-direction:column !important;
     align-items:center !important;
-    justify-content:flex-start !important;
-    gap:8px !important;
+    justify-content:center !important;
+    z-index:110 !important;
     pointer-events:auto !important;
   }
 
-  body.mobile-play-active .mobile-game-dpad > button,
-  body.mobile-play-active .mobile-game-dpad > div button {
+  body.has-touch .mobile-screen.visible { display:flex !important; }
+
+  body.has-touch:not(.mobile-play-active) #game-app { display:none !important; }
+  body.has-touch:not(.mobile-play-active) .mobile-home-screen { display:flex !important; }
+
+  body.has-touch.mobile-play-active .mobile-play-actions {
+    display:block !important;
+    position:fixed !important;
+    inset:0 !important;
+    z-index:200 !important;
+    pointer-events:none !important;
+  }
+
+  body.has-touch.mobile-play-active .mobile-game-dpad {
+    position:absolute !important;
+    left:50% !important;
+    bottom:18px !important;
+    transform:translateX(-50%) !important;
+    width:210px !important;
+    height:145px !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    gap:7px !important;
+    pointer-events:auto !important;
+  }
+
+  body.has-touch.mobile-play-active .mobile-game-dpad > button,
+  body.has-touch.mobile-play-active .mobile-game-dpad > div button {
+    width:60px !important;
+    height:60px !important;
+    min-width:60px !important;
+    min-height:60px !important;
+    max-width:60px !important;
+    max-height:60px !important;
+    margin:0 !important;
+    padding:0 !important;
     display:flex !important;
     align-items:center !important;
     justify-content:center !important;
-    width:64px !important;
-    height:64px !important;
-    min-width:64px !important;
-    min-height:64px !important;
-    max-width:64px !important;
-    max-height:64px !important;
-    margin:0 !important;
-    padding:0 !important;
     border:2px solid var(--neon-cyan) !important;
     border-radius:12px !important;
     background:rgba(8,12,24,.88) !important;
     color:var(--neon-cyan) !important;
-    font:900 1.25rem var(--font-mono) !important;
-    box-shadow:0 5px 18px rgba(0,0,0,.6),inset 0 0 14px rgba(0,240,255,.1) !important;
+    font:900 1.2rem var(--font-mono) !important;
     touch-action:none !important;
   }
 
-  body.mobile-play-active .mobile-game-dpad > div {
+  body.has-touch.mobile-play-active .mobile-game-dpad > div {
     display:flex !important;
     flex-direction:row !important;
-    gap:8px !important;
+    gap:7px !important;
   }
 
-  body.mobile-play-active .mobile-game-dpad button.pressed {
+  body.has-touch.mobile-play-active .mobile-game-dpad button.pressed {
     background:var(--neon-cyan) !important;
     color:#000 !important;
     transform:scale(.94) !important;
+    box-shadow:0 0 24px rgba(0,240,255,.8) !important;
   }
 
-  body.mobile-play-active .canvas-viewport {
+  body.has-touch.mobile-play-active .touch-controls-container { display:none !important; }
+
+  body.has-touch.mobile-play-active .game-header,
+  body.has-touch.mobile-play-active .controls-panel,
+  body.has-touch.mobile-play-active .system-status,
+  body.has-touch.mobile-play-active .status-strip,
+  body.has-touch.mobile-play-active .mission-strip {
+    display:none !important;
+  }
+
+  body.has-touch.mobile-play-active #game-app {
+    display:flex !important;
+    padding:0 !important;
+    gap:0 !important;
+    width:100vw !important;
+    height:100dvh !important;
+    min-height:100dvh !important;
+    max-width:none !important;
+    border:0 !important;
+    border-radius:0 !important;
+    background:#020308 !important;
+  }
+
+  body.has-touch.mobile-play-active .canvas-viewport {
     position:fixed !important;
     inset:0 !important;
     width:100vw !important;
     height:100dvh !important;
+    z-index:1 !important;
     border:0 !important;
     border-radius:0 !important;
-    z-index:1 !important;
+    margin:0 !important;
   }
 
-  body.mobile-play-active #gameCanvas {
+  body.has-touch.mobile-play-active #gameCanvas {
     width:100vw !important;
-    height:calc(100dvh - 120px) !important;
+    height:auto !important;
     max-width:none !important;
-    max-height:none !important;
-    object-fit:contain !important;
+    aspect-ratio:16/9 !important;
   }
 
-  body.mobile-play-active .hud-panel {
+  body.has-touch.mobile-play-active .hud-panel {
     position:fixed !important;
     top:8px !important;
     left:8px !important;
     right:112px !important;
-    z-index:1100 !important;
+    z-index:180 !important;
     width:auto !important;
+    display:grid !important;
     grid-template-columns:repeat(4,minmax(0,1fr)) !important;
     gap:4px !important;
     pointer-events:none !important;
   }
 
-  body.mobile-play-active .hud-card {
-    min-height:40px !important;
-    padding:5px 6px !important;
-    background:rgba(2,4,10,.72) !important;
+  body.has-touch.mobile-play-active .hud-card {
+    min-height:36px !important;
+    padding:4px !important;
+    background:rgba(2,4,10,.7) !important;
   }
 
-  body.mobile-play-active .mobile-fab {
-    z-index:1200 !important;
-  }
+  body.has-touch.mobile-play-active .hud-label { font-size:.48rem !important; }
+  body.has-touch.mobile-play-active .hud-val { font-size:.72rem !important; }
 
-  body:not(.mobile-play-active) #game-app { display:none !important; }
-  body:not(.mobile-play-active) .mobile-home-screen { display:flex !important; }
-  body:not(.mobile-play-active) .mobile-play-actions { display:none !important; }
-  body:not(.mobile-play-active) .mobile-pause-screen,
-  body:not(.mobile-play-active) .mobile-gameover-screen { display:none !important; }
+  body.has-touch.mobile-play-active .mobile-fab {
+    width:48px !important;
+    height:48px !important;
+    min-width:48px !important;
+    min-height:48px !important;
+    z-index:210 !important;
+  }
 
   @media (max-width:380px) {
-    body.mobile-play-active .mobile-game-dpad {
-      width:196px !important;
-      height:136px !important;
-      bottom:18px !important;
+    body.has-touch.mobile-play-active .mobile-game-dpad {
+      width:190px !important;
+      height:132px !important;
     }
-    body.mobile-play-active .mobile-game-dpad > button,
-    body.mobile-play-active .mobile-game-dpad > div button {
-      width:56px !important;
-      height:56px !important;
-      min-width:56px !important;
-      min-height:56px !important;
+    body.has-touch.mobile-play-active .mobile-game-dpad > button,
+    body.has-touch.mobile-play-active .mobile-game-dpad > div button {
+      width:54px !important;
+      height:54px !important;
+      min-width:54px !important;
+      min-height:54px !important;
     }
   }
 }
