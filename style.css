@@ -1734,3 +1734,133 @@ body.has-touch:not(.mobile-play-active) .mobile-play-actions {
     min-height: 58px !important;
   }
 }
+
+/* MOBILE v1.5 — force phone/tablet presentation by viewport width.
+   This intentionally does not depend on pointer detection, because Android
+   browsers can report unusual pointer/viewport combinations. */
+@media screen and (max-width: 900px) {
+  .mobile-interface { display:block !important; }
+
+  body.mobile-play-active .touch-controls-container {
+    display:none !important;
+  }
+
+  body.mobile-play-active .mobile-play-actions {
+    display:block !important;
+    position:fixed !important;
+    inset:0 !important;
+    z-index:1000 !important;
+    pointer-events:none !important;
+  }
+
+  body.mobile-play-active .mobile-game-dpad {
+    display:flex !important;
+    position:absolute !important;
+    left:50% !important;
+    bottom:24px !important;
+    transform:translateX(-50%) !important;
+    width:220px !important;
+    height:150px !important;
+    margin:0 !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    gap:8px !important;
+    pointer-events:auto !important;
+  }
+
+  body.mobile-play-active .mobile-game-dpad > button,
+  body.mobile-play-active .mobile-game-dpad > div button {
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    width:64px !important;
+    height:64px !important;
+    min-width:64px !important;
+    min-height:64px !important;
+    max-width:64px !important;
+    max-height:64px !important;
+    margin:0 !important;
+    padding:0 !important;
+    border:2px solid var(--neon-cyan) !important;
+    border-radius:12px !important;
+    background:rgba(8,12,24,.88) !important;
+    color:var(--neon-cyan) !important;
+    font:900 1.25rem var(--font-mono) !important;
+    box-shadow:0 5px 18px rgba(0,0,0,.6),inset 0 0 14px rgba(0,240,255,.1) !important;
+    touch-action:none !important;
+  }
+
+  body.mobile-play-active .mobile-game-dpad > div {
+    display:flex !important;
+    flex-direction:row !important;
+    gap:8px !important;
+  }
+
+  body.mobile-play-active .mobile-game-dpad button.pressed {
+    background:var(--neon-cyan) !important;
+    color:#000 !important;
+    transform:scale(.94) !important;
+  }
+
+  body.mobile-play-active .canvas-viewport {
+    position:fixed !important;
+    inset:0 !important;
+    width:100vw !important;
+    height:100dvh !important;
+    border:0 !important;
+    border-radius:0 !important;
+    z-index:1 !important;
+  }
+
+  body.mobile-play-active #gameCanvas {
+    width:100vw !important;
+    height:calc(100dvh - 120px) !important;
+    max-width:none !important;
+    max-height:none !important;
+    object-fit:contain !important;
+  }
+
+  body.mobile-play-active .hud-panel {
+    position:fixed !important;
+    top:8px !important;
+    left:8px !important;
+    right:112px !important;
+    z-index:1100 !important;
+    width:auto !important;
+    grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+    gap:4px !important;
+    pointer-events:none !important;
+  }
+
+  body.mobile-play-active .hud-card {
+    min-height:40px !important;
+    padding:5px 6px !important;
+    background:rgba(2,4,10,.72) !important;
+  }
+
+  body.mobile-play-active .mobile-fab {
+    z-index:1200 !important;
+  }
+
+  body:not(.mobile-play-active) #game-app { display:none !important; }
+  body:not(.mobile-play-active) .mobile-home-screen { display:flex !important; }
+  body:not(.mobile-play-active) .mobile-play-actions { display:none !important; }
+  body:not(.mobile-play-active) .mobile-pause-screen,
+  body:not(.mobile-play-active) .mobile-gameover-screen { display:none !important; }
+
+  @media (max-width:380px) {
+    body.mobile-play-active .mobile-game-dpad {
+      width:196px !important;
+      height:136px !important;
+      bottom:18px !important;
+    }
+    body.mobile-play-active .mobile-game-dpad > button,
+    body.mobile-play-active .mobile-game-dpad > div button {
+      width:56px !important;
+      height:56px !important;
+      min-width:56px !important;
+      min-height:56px !important;
+    }
+  }
+}
