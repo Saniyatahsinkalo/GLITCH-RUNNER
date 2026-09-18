@@ -109,6 +109,11 @@ const mobileGameDpad = document.getElementById("mobileGameDpad");
 const mobileDragMessage = document.getElementById("mobileDragMessage");
 const mobileModeButtons = document.getElementById("mobileModeButtons");
 const mobileModeDrag = document.getElementById("mobileModeDrag");
+const mobileComboBanner = document.getElementById("mobileComboBanner");
+const mobileAlertBanner = document.getElementById("mobileAlertBanner");
+let mobileComboBannerTimer = null;
+let mobileAlertBannerTimer = null;
+
 const mobileArcadeHud = document.getElementById("mobileArcadeHud");
 const mobileLiveScore = document.getElementById("mobileLiveScore");
 const mobileLiveLevel = document.getElementById("mobileLiveLevel");
@@ -1266,6 +1271,13 @@ function collectMemoryShard(index, fromStorm = false) {
   if ([5, 10, 20, 30].includes(combo)) {
     AudioSFX.playComboMilestone();
     createFloatingText(`★ ${combo}X COMBO MILESTONE! ★`, player.x, player.y - 45, "#ffb703");
+    if (mobileComboBanner) {
+      mobileComboBanner.textContent = `★ ${combo}X COMBO! ★`;
+      mobileComboBanner.classList.add("show");
+      clearTimeout(mobileComboBannerTimer);
+      mobileComboBannerTimer = setTimeout(() => mobileComboBanner.classList.remove("show"), 900);
+    }
+    mobileHaptic(24);
   }
 
   if (shard.type === "NORMAL") {
@@ -1558,6 +1570,12 @@ function takeDamage(amount, sourceX, sourceY) {
 
   createFloatingText("-10 HEALTH", player.x, player.y - 25, "#ff3344");
   createParticleBurst(player.x, player.y, "#ff0055", 10);
+  if (mobileAlertBanner) {
+    mobileAlertBanner.textContent = "⚠ GLITCH IMPACT // -10 HP";
+    mobileAlertBanner.classList.add("show");
+    clearTimeout(mobileAlertBannerTimer);
+    mobileAlertBannerTimer = setTimeout(() => mobileAlertBanner.classList.remove("show"), 650);
+  }
   mobileHaptic(18);
 
   updateHUD();
