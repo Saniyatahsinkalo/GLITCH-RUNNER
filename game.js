@@ -138,7 +138,7 @@ let touchMode = Storage.get("glitch_runner_touch_mode", "buttons"); // "buttons"
 let audioEnabled = Storage.get("glitch_runner_audio_enabled", true);
 
 function isMobileTouchDevice() {
-  return window.matchMedia("(max-width: 520px) and (pointer: coarse)").matches;
+  return ("ontouchstart" in window) || navigator.maxTouchPoints > 0 || window.matchMedia("(max-width: 900px)").matches;
 }
 
 function syncMobileInterface() {
