@@ -1762,3 +1762,49 @@ body.has-touch .touch-controls-container,
     transform:translateY(-4px);
   }
 }
+
+/* MOBILE v2.2 — state-driven modal guarantee */
+@media (max-width:520px) and (pointer:coarse) {
+  body.mobile-game-paused .mobile-interface {
+    z-index:9990 !important;
+    pointer-events:auto !important;
+  }
+  body.mobile-game-paused .mobile-play-actions,
+  body.mobile-game-paused .mobile-vfx,
+  body.mobile-game-paused .mobile-arcade-hud {
+    display:none !important;
+    visibility:hidden !important;
+  }
+  body.mobile-game-paused .mobile-pause-screen {
+    display:flex !important;
+    position:fixed !important;
+    inset:0 !important;
+    z-index:10000 !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    pointer-events:auto !important;
+    align-items:center !important;
+    justify-content:center !important;
+  }
+  body.mobile-game-over .mobile-interface {
+    z-index:9990 !important;
+    pointer-events:auto !important;
+  }
+  body.mobile-game-over .mobile-play-actions,
+  body.mobile-game-over .mobile-vfx,
+  body.mobile-game-over .mobile-arcade-hud {
+    display:none !important;
+    visibility:hidden !important;
+  }
+  body.mobile-game-over .mobile-gameover-screen {
+    display:flex !important;
+    position:fixed !important;
+    inset:0 !important;
+    z-index:10000 !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    pointer-events:auto !important;
+    align-items:center !important;
+    justify-content:center !important;
+  }
+}
