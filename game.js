@@ -105,6 +105,8 @@ const mobilePlayAudioBtn = document.getElementById("mobilePlayAudioBtn");
 const mobileAudioGlyph = document.getElementById("mobileAudioGlyph");
 const mobileAudioText = document.getElementById("mobileAudioText");
 const mobilePlayAudioGlyph = document.getElementById("mobilePlayAudioGlyph");
+const mobileModeButtons = document.getElementById("mobileModeButtons");
+const mobileModeDrag = document.getElementById("mobileModeDrag");
 
 // ============================================================================
 // 3. STORAGE & PERSISTENT METRICS (SAFE LOCALSTORAGE)
@@ -158,6 +160,9 @@ function syncMobileInterface() {
   mobileAudioGlyph.textContent = audioEnabled ? "🔊" : "🔇";
   mobilePlayAudioGlyph.textContent = audioEnabled ? "🔊" : "🔇";
   mobileAudioBtn.classList.toggle("muted", !audioEnabled);
+
+  mobileModeButtons?.classList.toggle("mode-active", touchMode === "buttons");
+  mobileModeDrag?.classList.toggle("mode-active", touchMode === "drag");
   mobilePlayAudioBtn.classList.toggle("muted", !audioEnabled);
 }
 
@@ -2571,6 +2576,22 @@ if (mobileAudioBtn) {
 
 if (mobilePlayAudioBtn) {
   mobilePlayAudioBtn.addEventListener("click", toggleAudioFromMobile);
+}
+
+if (mobileModeButtons) {
+  mobileModeButtons.addEventListener("click", () => {
+    AudioSFX.playButton();
+    applyTouchMode("buttons");
+    syncMobileInterface();
+  });
+}
+
+if (mobileModeDrag) {
+  mobileModeDrag.addEventListener("click", () => {
+    AudioSFX.playButton();
+    applyTouchMode("drag");
+    syncMobileInterface();
+  });
 }
 
 // ============================================================================
