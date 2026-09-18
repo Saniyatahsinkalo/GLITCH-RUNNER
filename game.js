@@ -601,11 +601,15 @@ function applyTouchMode(mode) {
     btnModeDrag.classList.remove("active");
     virtualDpad.style.display = "flex";
     touchDragHint.style.display = "none";
+    if (mobileGameDpad) mobileGameDpad.style.display = "flex";
+    if (mobileDragMessage) mobileDragMessage.classList.remove("active");
   } else {
     btnModeDrag.classList.add("active");
     btnModeButtons.classList.remove("active");
     virtualDpad.style.display = "none";
     touchDragHint.style.display = "block";
+    if (mobileGameDpad) mobileGameDpad.style.display = "none";
+    if (mobileDragMessage) mobileDragMessage.classList.add("active");
   }
 }
 
