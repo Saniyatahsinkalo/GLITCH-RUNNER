@@ -171,6 +171,32 @@
       </div>
 
       <div class="mobile-play-actions" id="mobilePlayActions">
+        <div class="mobile-arcade-hud" id="mobileArcadeHud" aria-live="polite">
+  <div class="mobile-stat mobile-stat-score">
+    <span>SCORE</span><strong id="mobileLiveScore">00000</strong>
+  </div>
+  <div class="mobile-stat mobile-stat-level">
+    <span>LVL</span><strong id="mobileLiveLevel">01</strong>
+  </div>
+  <div class="mobile-combo-box" id="mobileComboBox">
+    <div class="mobile-combo-top"><span>COMBO</span><strong id="mobileLiveCombo">0x</strong></div>
+    <div class="mobile-combo-track"><div id="mobileComboFill"></div></div>
+  </div>
+  <div class="mobile-health-box" id="mobileHealthBox">
+    <div class="mobile-health-top"><span>HP</span><strong id="mobileLiveHealth">100%</strong></div>
+    <div class="mobile-health-track"><div id="mobileHealthFill"></div></div>
+  </div>
+  <div class="mobile-status-row">
+    <span id="mobileRealityBadge" class="mobile-status-chip reality">REALITY: STABLE</span>
+    <span id="mobilePowerBadge" class="mobile-status-chip power">POWER: NONE</span>
+  </div>
+  <div class="mobile-objective-row">
+    <span class="mobile-objective-label">MISSION</span>
+    <span id="mobileObjectiveText">COLLECT SHARDS</span>
+    <span id="mobileObjectiveProgress">(0/10)</span>
+  </div>
+</div>
+
         <div class="mobile-game-dpad" id="mobileGameDpad" aria-label="Touch movement controls">
           <button type="button" data-mobile-key="up" aria-label="Move up">▲</button>
           <div>
