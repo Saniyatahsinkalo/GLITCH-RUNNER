@@ -861,6 +861,369 @@ body.has-touch .touch-controls-container,
   .dpad-btn { min-height: 46px; }
 }
 
+
+
+/* ==========================================================================
+   MOBILE v1.1 - Dedicated Phone Game Interface
+   Menu, active play controls, pause and game-over are separate screens.
+   ========================================================================== */
+
+.mobile-interface {
+  display: none;
+}
+
+.mobile-play-actions,
+.mobile-screen {
+  display: none;
+}
+
+@media (max-width: 520px) and (pointer: coarse) {
+  .mobile-interface {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    font-family: var(--font-mono);
+  }
+
+  .mobile-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 110;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding:
+      max(24px, env(safe-area-inset-top))
+      24px
+      max(24px, env(safe-area-inset-bottom));
+    text-align: center;
+    background:
+      radial-gradient(circle at 50% 35%, rgba(0, 240, 255, .10), transparent 34%),
+      linear-gradient(rgba(2, 4, 10, .90), rgba(2, 4, 10, .97));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    pointer-events: auto;
+  }
+
+  .mobile-screen.visible {
+    display: flex;
+  }
+
+  .mobile-brand {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 12vw, 4rem);
+    line-height: 1;
+    font-weight: 950;
+    letter-spacing: 4px;
+    color: #fff;
+    text-shadow:
+      0 0 8px var(--neon-cyan),
+      4px 0 0 rgba(255, 0, 85, .55),
+      -4px 0 0 rgba(0, 240, 255, .35);
+    margin-bottom: 10px;
+  }
+
+  .mobile-tagline {
+    color: var(--neon-magenta);
+    font-size: .68rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 34px;
+  }
+
+  .mobile-best-card {
+    width: min(82vw, 300px);
+    padding: 14px 18px;
+    border: 1px solid rgba(0,240,255,.25);
+    background: rgba(8,12,24,.72);
+    box-shadow: inset 0 0 18px rgba(0,240,255,.06);
+    margin-bottom: 22px;
+  }
+
+  .mobile-best-card span {
+    display: block;
+    color: var(--text-muted);
+    font-size: .62rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 5px;
+  }
+
+  .mobile-best-card strong {
+    display: block;
+    color: var(--neon-cyan);
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px var(--neon-cyan-glow);
+  }
+
+  .mobile-main-btn {
+    appearance: none;
+    border: 1px solid var(--neon-cyan);
+    background: rgba(0,240,255,.12);
+    color: var(--neon-cyan);
+    width: min(82vw, 300px);
+    min-height: 58px;
+    padding: 14px 22px;
+    font: 900 .95rem var(--font-mono);
+    letter-spacing: 2px;
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+    box-shadow: 0 0 22px rgba(0,240,255,.22), inset 0 0 18px rgba(0,240,255,.06);
+    touch-action: manipulation;
+  }
+
+  .mobile-main-btn:active {
+    transform: scale(.97);
+    background: var(--neon-cyan);
+    color: #000;
+  }
+
+  .mobile-home-actions,
+  .mobile-menu-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .mobile-small-btn {
+    appearance: none;
+    border: 1px solid rgba(0,240,255,.35);
+    background: rgba(8,12,24,.72);
+    color: var(--text-primary);
+    min-height: 46px;
+    padding: 10px 18px;
+    font: 800 .68rem var(--font-mono);
+    letter-spacing: 1px;
+    border-radius: 7px;
+    touch-action: manipulation;
+  }
+
+  .mobile-small-btn.danger {
+    color: var(--neon-magenta);
+    border-color: rgba(255,0,85,.5);
+  }
+
+  .mobile-small-btn:active {
+    transform: scale(.96);
+    border-color: var(--neon-cyan);
+  }
+
+  .mobile-help {
+    position: absolute;
+    bottom: max(18px, env(safe-area-inset-bottom));
+    color: #64748b;
+    font-size: .53rem;
+    letter-spacing: .9px;
+  }
+
+  .mobile-panel-title {
+    color: var(--neon-amber);
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 9vw, 2.8rem);
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-shadow: 0 0 16px rgba(255,183,3,.45);
+    margin-bottom: 8px;
+  }
+
+  .danger-title {
+    color: var(--neon-magenta);
+    text-shadow: 0 0 16px var(--neon-magenta-glow);
+  }
+
+  .mobile-panel-subtitle {
+    color: var(--text-muted);
+    font-size: .62rem;
+    letter-spacing: 1.4px;
+    margin-bottom: 28px;
+  }
+
+  .mobile-results {
+    width: min(88vw, 340px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+    margin-bottom: 20px;
+  }
+
+  .mobile-results div {
+    padding: 11px 8px;
+    border: 1px solid rgba(0,240,255,.18);
+    background: rgba(8,12,24,.68);
+  }
+
+  .mobile-results span {
+    display: block;
+    color: var(--text-muted);
+    font-size: .52rem;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+  }
+
+  .mobile-results strong {
+    color: var(--neon-cyan);
+    font-size: 1rem;
+    letter-spacing: 1px;
+  }
+
+  .mobile-play-actions {
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+    pointer-events: none;
+  }
+
+  .mobile-play-actions.visible {
+    display: block;
+  }
+
+  .mobile-fab {
+    position: absolute;
+    top: max(10px, env(safe-area-inset-top));
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    appearance: none;
+    border: 1px solid rgba(0,240,255,.42);
+    background: rgba(2,4,10,.58);
+    color: var(--neon-cyan);
+    box-shadow: 0 4px 14px rgba(0,0,0,.45), inset 0 0 10px rgba(0,240,255,.08);
+    font: 900 1rem var(--font-mono);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    touch-action: manipulation;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+
+  .pause-fab { right: 62px; }
+  .audio-fab { right: 10px; color: var(--neon-amber); }
+  .mobile-fab.muted { color: var(--neon-red); border-color: rgba(255,51,68,.45); }
+
+  /* Active play mode: the old desktop chrome disappears. */
+  body.mobile-play-active .game-header,
+  body.mobile-play-active .controls-panel,
+  body.mobile-play-active .system-status,
+  body.mobile-play-active .status-strip,
+  body.mobile-play-active .mission-strip {
+    display: none !important;
+  }
+
+  body.mobile-play-active #game-app {
+    padding: 0;
+    gap: 0;
+    min-height: 100dvh;
+    height: 100dvh;
+  }
+
+  /* Keep HUD minimal and floating over the arena. */
+  body.mobile-play-active .hud-panel {
+    position: fixed;
+    z-index: 125;
+    top: max(7px, env(safe-area-inset-top));
+    left: 8px;
+    right: 112px;
+    width: auto;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 3px;
+    pointer-events: none;
+  }
+
+  body.mobile-play-active .hud-card {
+    min-height: 32px;
+    padding: 3px 4px;
+    background: rgba(2,4,10,.58);
+    border-color: rgba(0,240,255,.16);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+
+  body.mobile-play-active .hud-label { font-size: .46rem; letter-spacing: .5px; }
+  body.mobile-play-active .hud-val { font-size: .72rem; }
+  body.mobile-play-active .health-track { height: 4px; }
+
+  body.mobile-play-active .canvas-viewport {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    width: 100vw;
+    height: 100dvh;
+    min-height: 0;
+    border: 0;
+    border-radius: 0;
+    background: #020308;
+  }
+
+  body.mobile-play-active #gameCanvas {
+    width: min(100vw, calc(100dvh * 1.7778));
+    height: auto;
+    max-width: none;
+    aspect-ratio: 16 / 9;
+  }
+
+  body.mobile-play-active .touch-controls-container {
+    position: fixed;
+    z-index: 130;
+    left: 0;
+    right: 0;
+    bottom: max(10px, env(safe-area-inset-bottom));
+    margin: 0;
+    pointer-events: none;
+  }
+
+  body.mobile-play-active .virtual-dpad {
+    pointer-events: auto;
+    width: min(56vw, 230px);
+    grid-template-columns: repeat(3, minmax(50px, 18vw));
+    grid-template-rows: repeat(2, minmax(48px, 14vw));
+    gap: 6px;
+  }
+
+  body.mobile-play-active .dpad-btn {
+    min-height: 48px;
+    background: rgba(8,12,24,.55);
+    border-color: rgba(0,240,255,.45);
+  }
+
+  body.mobile-play-active .touch-mode-bar,
+  body.mobile-play-active .touch-drag-hint {
+    display: none !important;
+  }
+
+  body:not(.mobile-play-active) .canvas-viewport {
+    visibility: hidden;
+  }
+
+  body:not(.mobile-play-active) .touch-controls-container,
+  body:not(.mobile-play-active) .hud-panel,
+  body:not(.mobile-play-active) .status-strip,
+  body:not(.mobile-play-active) .mission-strip {
+    display: none !important;
+  }
+}
+
+@media (max-width: 520px) and (pointer: coarse) and (orientation: landscape) {
+  .mobile-brand { font-size: 2rem; margin-bottom: 6px; }
+  .mobile-tagline { margin-bottom: 12px; }
+  .mobile-best-card { margin-bottom: 10px; padding: 8px 14px; }
+  .mobile-main-btn { min-height: 48px; }
+  .mobile-help { display: none; }
+
+  body.mobile-play-active .hud-panel {
+    right: 112px;
+  }
+
+  body.mobile-play-active .virtual-dpad {
+    width: min(30vw, 210px);
+    grid-template-rows: repeat(2, 44px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .01ms !important;
