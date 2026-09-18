@@ -1577,3 +1577,32 @@ body.has-touch .touch-controls-container,
     display: block !important;
   }
 }
+
+/* MOBILE FUN LAYER v2 — visuals only, gameplay unchanged */
+@media (max-width:900px) {
+  body.has-touch .mobile-home-screen {
+    background:
+      radial-gradient(circle at 50% 22%,rgba(0,240,255,.16),transparent 28%),
+      radial-gradient(circle at 18% 82%,rgba(255,0,85,.12),transparent 30%),
+      linear-gradient(180deg,#050915,#020308 72%);
+  }
+  body.has-touch .mobile-brand { animation: mobileBrandPulse 2.8s ease-in-out infinite; }
+  @keyframes mobileBrandPulse { 50% { text-shadow:0 0 18px var(--neon-cyan),4px 0 rgba(255,0,85,.6),-4px 0 rgba(0,240,255,.45); } }
+  body.has-touch .mobile-main-btn { box-shadow:0 0 28px rgba(0,240,255,.38),inset 0 0 22px rgba(0,240,255,.08); }
+  body.has-touch .mobile-small-btn,
+  body.has-touch .mobile-main-btn { transition:transform .12s ease,box-shadow .12s ease,background .12s ease; }
+  body.has-touch .mobile-small-btn:active,
+  body.has-touch .mobile-main-btn:active { transform:scale(.96); }
+  body.has-touch .mobile-control-card { border-radius:10px; box-shadow:inset 0 0 18px rgba(0,240,255,.05); }
+  body.has-touch .mobile-arcade-decor {
+    display:flex; gap:9px; align-items:center; justify-content:center;
+    color:var(--neon-cyan); font:800 .48rem var(--font-mono); letter-spacing:2px;
+    opacity:.65; margin-top:1px;
+  }
+  body.has-touch.mobile-play-active .mobile-game-dpad > button,
+  body.has-touch.mobile-play-active .mobile-game-dpad > div button {
+    box-shadow:0 5px 18px rgba(0,0,0,.65),inset 0 0 15px rgba(0,240,255,.10),0 0 10px rgba(0,240,255,.08);
+    transition:transform .08s ease,background .08s ease,box-shadow .08s ease;
+  }
+  body.has-touch.mobile-play-active .mobile-fab { backdrop-filter:blur(7px); }
+}
