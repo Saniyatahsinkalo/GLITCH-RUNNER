@@ -1537,6 +1537,7 @@ function takeDamage(amount, sourceX, sourceY) {
 
   createFloatingText("-10 HEALTH", player.x, player.y - 25, "#ff3344");
   createParticleBurst(player.x, player.y, "#ff0055", 10);
+  mobileHaptic(18);
 
   updateHUD();
 
@@ -2088,6 +2089,12 @@ function updateLevel() {
 // ============================================================================
 // 16. PARTICLES & FLOATING COMBAT TEXT
 // ============================================================================
+function mobileHaptic(duration = 10) {
+  if (typeof navigator !== "undefined" && typeof navigator.vibrate === "function" && isMobileTouchDevice()) {
+    try { navigator.vibrate(duration); } catch {}
+  }
+}
+
 function createParticleBurst(x, y, color, count = 8) {
   for (let i = 0; i < count; i++) {
     const angle = Math.random() * Math.PI * 2;
