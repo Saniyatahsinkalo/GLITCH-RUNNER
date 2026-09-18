@@ -162,6 +162,8 @@ function syncMobileInterface() {
   if (!isMobileTouchDevice()) return;
 
   document.body.classList.toggle("mobile-play-active", gameState === "PLAYING" || gameState === "PAUSED");
+  document.body.classList.toggle("mobile-game-paused", gameState === "PAUSED");
+  document.body.classList.toggle("mobile-game-over", gameState === "GAME_OVER");
 
   mobileHomeScreen.classList.toggle("visible", gameState === "READY");
   mobilePlayActions.classList.toggle("visible", gameState === "PLAYING");
