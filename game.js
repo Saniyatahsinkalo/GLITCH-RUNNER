@@ -110,6 +110,13 @@ const mobileDragMessage = document.getElementById("mobileDragMessage");
 const mobileModeButtons = document.getElementById("mobileModeButtons");
 const mobileModeDrag = document.getElementById("mobileModeDrag");
 const mobileComboBanner = document.getElementById("mobileComboBanner");
+const mobileBoostBtn = document.getElementById("mobileBoostBtn");
+const mobileBoostCooldown = document.getElementById("mobileBoostCooldown");
+let mobileBoostTimer = 0;
+let mobileBoostCooldownTimer = 0;
+const MOBILE_BOOST_DURATION = 0.75;
+const MOBILE_BOOST_COOLDOWN = 3.5;
+
 const mobileAlertBanner = document.getElementById("mobileAlertBanner");
 let mobileComboBannerTimer = null;
 let mobileAlertBannerTimer = null;
@@ -196,6 +203,11 @@ function syncMobileInterface() {
   mobileGameDpad?.classList.toggle("drag-hidden", touchMode === "drag");
   mobileDragMessage?.classList.toggle("active", touchMode === "drag");
   mobilePlayAudioBtn.classList.toggle("muted", !audioEnabled);
+  if (mobileBoostBtn) {
+    mobileBoostBtn.classList.toggle("ready", gameState === "PLAYING" && mobileBoostCooldownTimer <= 0);
+    mobileBoostBtn.classList.toggle("cooldown", mobileBoostCooldownTimer > 0);
+    if (mobileBoostCooldownTimer <= 0) mobileBoostCooldown.textContent = "";
+  }
   if (mobileArcadeHud) mobileArcadeHud.classList.toggle("visible", gameState === "PLAYING" || gameState === "PAUSED");
   if (mobileObjectiveText && currentMission) mobileObjectiveText.textContent = currentMission.text;
   if (mobileObjectiveProgress && currentMission) mobileObjectiveProgress.textContent = `(${Math.min(currentMission.count, currentMission.target)}/${currentMission.target})`;
@@ -794,6 +806,12 @@ function updatePlayer() {
     dx = -dx; // Mirror horizontal steering
   }
 
+  const mobileBoostActive = mobileBoostTimer > 0;
+  const movementSpeed = mobileBoostActive ? player.speed * 2.35 : player.speed;
+  if (mobileBoostActive) {
+    player.invulnerableTimer = Math.max(player.invulnerableTimer, 2);
+  }
+
   if (isGravityFlux) {
     // Heavy momentum / low friction glide
     player.vx = (player.vx || 0) * 0.94 + dx * player.speed * 0.18;
@@ -801,14 +819,17 @@ function updatePlayer() {
     player.x += player.vx;
     player.y += player.vy;
   } else {
-    player.vx = dx * player.speed;
-    player.vy = dy * player.speed;
+    player.vx = dx * movementSpeed;
+    player.vy = dy * movementSpeed;
     player.x += player.vx;
     player.y += player.vy;
   }
 
   clampPlayerBounds();
   player.animTimer++;
+  if (mobileBoostTimer > 0) {
+    mobileBoostTimer = Math.max(0, mobileBoostTimer - 1 / 60);
+  }
 
   if (player.invulnerableTimer > 0) {
     player.invulnerableTimer--;
@@ -2511,6 +2532,8 @@ function resetGameObjects() {
   combo = 0;
   maxCombo = 0;
   missionsCompleted = 0;
+  mobileBoostTimer = 0;
+  mobileBoostCooldownTimer = 0;
 
   player.x = LOGICAL_WIDTH / 2;
   player.y = LOGICAL_HEIGHT / 2;
@@ -2619,6 +2642,23 @@ if (mobileGameDpad) {
 }
 
 // Dedicated mobile interface actions
+if (mobileBoostBtn) {
+  mobileBoostBtn.addEventListener("pointerdown", (event) => {
+    event.preventDefault();
+    if (gameState !== "PLAYING" || mobileBoostCooldownTimer > 0) return;
+    mobileBoostTimer = MOBILE_BOOST_DURATION;
+    mobileBoostCooldownTimer = MOBILE_BOOST_COOLDOWN;
+    triggerScreenShake(0.22);
+    createParticleBurst(player.x, player.y, "#ffb703", 18);
+    createFloatingText("BOOST!", player.x, player.y - 28, "#ffb703");
+    mobileHaptic(35);
+    if (mobileBoostBtn) {
+      mobileBoostBtn.classList.remove("ready");
+      mobileBoostBtn.classList.add("cooldown");
+    }
+  });
+}
+
 if (mobilePlayBtn) {
   mobilePlayBtn.addEventListener("click", () => {
     AudioSFX.playButton();
@@ -2707,6 +2747,16 @@ if (mobileModeDrag) {
 // 19. MAIN GAME LOOP
 // ============================================================================
 function gameLoop(timestamp) {
+  if (mobileBoostCooldownTimer > 0) {
+    mobileBoostCooldownTimer = Math.max(0, mobileBoostCooldownTimer - (lastTimestamp ? Math.min(0.1, (timestamp - lastTimestamp) / 1000) : 0));
+    if (mobileBoostCooldownTimer <= 0 && mobileBoostBtn) {
+      mobileBoostBtn.classList.remove("cooldown");
+      mobileBoostBtn.classList.add("ready");
+      mobileBoostCooldown.textContent = "";
+    } else if (mobileBoostCooldown && mobileBoostCooldownTimer > 0) {
+      mobileBoostCooldown.textContent = Math.ceil(mobileBoostCooldownTimer) + "s";
+    }
+  }
   if (gameState !== "PLAYING") {
     animationFrameId = null;
     lastTimestamp = null;
