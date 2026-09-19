@@ -170,6 +170,15 @@ function syncMobileInterface() {
   mobilePauseScreen.classList.toggle("visible", gameState === "PAUSED");
   mobileGameOverScreen.classList.toggle("visible", gameState === "GAME_OVER");
 
+  // Hard-force mobile screen visibility inline so browser stacking/CSS rules cannot hide pause or game-over controls.
+  mobilePlayActions.style.display = gameState === "PLAYING" ? "block" : "none";
+  mobilePauseScreen.style.display = gameState === "PAUSED" ? "flex" : "none";
+  mobileGameOverScreen.style.display = gameState === "GAME_OVER" ? "flex" : "none";
+  mobilePauseScreen.style.zIndex = "10000";
+  mobileGameOverScreen.style.zIndex = "10000";
+  mobilePauseScreen.style.pointerEvents = gameState === "PAUSED" ? "auto" : "none";
+  mobileGameOverScreen.style.pointerEvents = gameState === "GAME_OVER" ? "auto" : "none";
+
   mobileBestScore.textContent = String(bestScore).padStart(5, "0");
   mobileFinalScore.textContent = String(score).padStart(5, "0");
   mobileFinalBest.textContent = String(bestScore).padStart(5, "0");
