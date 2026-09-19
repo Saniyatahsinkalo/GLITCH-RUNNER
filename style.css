@@ -1808,3 +1808,52 @@ body.has-touch .touch-controls-container,
     justify-content:center !important;
   }
 }
+
+/* MOBILE v2.3 — boost control + accessible pause/audio */
+@media (max-width:520px) and (pointer:coarse) {
+  body.mobile-play-active .pause-fab,
+  body.mobile-play-active .audio-fab {
+    z-index:500 !important;
+  }
+  body.mobile-play-active .pause-fab { right:68px !important; top:max(14px,env(safe-area-inset-top)) !important; }
+  body.mobile-play-active .audio-fab { right:14px !important; top:max(14px,env(safe-area-inset-top)) !important; }
+
+  .mobile-boost-btn {
+    position:fixed;
+    right:14px;
+    bottom:max(155px,calc(env(safe-area-inset-bottom) + 145px));
+    z-index:500;
+    width:72px;
+    height:72px;
+    border-radius:50%;
+    border:2px solid rgba(255,183,3,.8);
+    background:radial-gradient(circle,rgba(255,183,3,.20),rgba(8,12,24,.88) 68%);
+    color:#ffb703;
+    box-shadow:0 0 22px rgba(255,183,3,.30),inset 0 0 18px rgba(255,183,3,.12);
+    font:900 9px var(--font-mono);
+    letter-spacing:1px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:1px;
+    pointer-events:auto;
+    touch-action:manipulation;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .mobile-boost-btn .boost-icon { font-size:24px; line-height:22px; }
+  .mobile-boost-btn .boost-label { font-size:8px; }
+  .mobile-boost-btn #mobileBoostCooldown { font-size:7px; color:#94a3b8; min-height:8px; }
+  .mobile-boost-btn.ready { animation:mobileBoostPulse 1.3s ease-in-out infinite; }
+  .mobile-boost-btn:active { transform:scale(.91); }
+  .mobile-boost-btn.cooldown { opacity:.58; filter:grayscale(.35); }
+  @keyframes mobileBoostPulse {
+    50% { box-shadow:0 0 34px rgba(255,183,3,.58),inset 0 0 24px rgba(255,183,3,.18); }
+  }
+
+  body.mobile-game-paused .mobile-boost-btn,
+  body.mobile-game-over .mobile-boost-btn,
+  body:not(.mobile-play-active) .mobile-boost-btn {
+    display:none !important;
+  }
+}
